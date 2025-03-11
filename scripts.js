@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
         'Grasshopper_Rhino_Projects.html',
         'Case_Studies_Projects.html'
     ]; // Array of new project names
-
     
     // Create vinyl items
     for (let i = 0; i < 8; i++) { // Change the loop to create 8 vinyl items
@@ -64,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const vinylCovers = document.querySelectorAll('.vinyl-cover');
     const images = [
-        'images/vinyl1_image.png', // Corrected path
+        'images/vinyl1_image.png',
         'path/to/your/image2.jpg',
         'path/to/your/image3.jpg',
         'path/to/your/image4.jpg',
@@ -75,5 +74,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     vinylCovers.forEach((cover, index) => {
         cover.style.backgroundImage = `url(${images[index]})`;
+    });
+
+    const vinylContainers = document.querySelectorAll('.vinyl-container');
+    const vinyls = document.querySelectorAll('.vinyl');
+
+    const aboutMeButton = document.getElementById('about-me-button');
+    const portfolioButton = document.getElementById('portfolio-button');
+
+    const headerIcon = document.getElementById('header-icon');
+    const textBox = document.getElementById('text-box');
+    const aboutMeText = document.getElementById('about-me-text');
+
+    // Set the "SAM'S PORTFOLIO" button as initially active
+    portfolioButton.classList.add('active');
+
+    aboutMeButton.addEventListener('click', () => {
+        // Highlight the "ABOUT ME" button
+        aboutMeButton.classList.add('active');
+        portfolioButton.classList.remove('active');
+
+        // Animate the header icon
+        headerIcon.classList.add('animate');
+
+        // Change the body background color and show the text box
+        document.body.classList.add('dark-grey-background');
+        textBox.style.display = 'block';
+        aboutMeText.style.display = 'block'; // Show the About Me text
+
+        // Hide the vinyl elements
+        vinylContainers.forEach(container => container.classList.add('hidden'));
+        vinylCovers.forEach(cover => cover.classList.add('hidden'));
+        vinyls.forEach(vinyl => vinyl.classList.add('hidden'));
+    });
+
+    portfolioButton.addEventListener('click', () => {
+        // Highlight the "SAM'S PORTFOLIO" button
+        portfolioButton.classList.add('active');
+        aboutMeButton.classList.remove('active');
+
+        // Reset the header icon size smoothly
+        headerIcon.classList.remove('animate');
+
+        // Revert the body background color to black and hide the text box
+        document.body.classList.remove('dark-grey-background');
+        textBox.style.display = 'none';
+        aboutMeText.style.display = 'none'; // Hide the About Me text
+
+        // Unhide the vinyl elements
+        vinylContainers.forEach(container => container.classList.remove('hidden'));
+        vinylCovers.forEach(cover => cover.classList.remove('hidden'));
+        vinyls.forEach(vinyl => vinyl.classList.remove('hidden'));
     });
 });

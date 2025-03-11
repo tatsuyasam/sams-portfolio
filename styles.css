@@ -7,6 +7,11 @@ body {
     overflow-x: scroll; /* Enable horizontal scrolling */
 }
 
+body.dark-grey-background {
+    background-color: #000000f6; /* Change background to dark grey */
+    color: #fff; /* Change text color to white */
+    transition: background-color 0.5s; /* Smooth transition for color change */}
+
 header {
     position: fixed;
     top: 0;
@@ -14,22 +19,59 @@ header {
     background-color: #00000000;
     color: #fff;
     text-align: left; /* Align text to the left */
-    padding: 10px;
+    padding: 0; /* Remove padding to align elements to the top edge */
     z-index: 10; /* Ensure the header is above other elements */
+    display: flex; /* Add flex display to arrange buttons side by side */
+    flex-wrap: nowrap; /* Prevent wrapping to keep buttons in a single line */
+    align-items: flex-start; /* Align items to the top edge */
+    padding: 5px;
 }
 
 .header-button {
-    background-color: #444;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
+    background-color: #272727;
+    color: #a8a8a8;
+    border: 1px solid #a8a8a8;
+    padding: 10px; /* Remove padding to ensure alignment */
+    padding-left: 10px; /* Add left padding for spacing */
+    padding-right: 80px;
+    padding-bottom: 5px; /* Add bottom padding for spacing */
     cursor: pointer;
-    font-size: 16px;
+    font-size: 11px; /* Reduce the font size */
+    display: flex;
+    align-items: flex-end; /* Align text to the top */
+    height: 60px; /* Set a fixed height for all buttons */
+    margin-right: 5px; /* Add spacing between buttons */
+    border-radius: 5px; /* Curve the corners */
+}
+
+.header-button.active {
+    border: 1px solid #fff; /* Highlight border */
+    color: #fff; /* Highlight text color */
 }
 
 .header-button:hover {
-    background-color: #555;
+    border: 1px solid #fff;
+    color: #fff;
 }
+
+.header-icon {
+    margin-left: auto; /* Push the icon to the right */
+    width: 50px; /* Increase the width of the icon */
+    height: 50px; /* Increase the height of the icon */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    padding-right: 20px;
+    padding-top: 5px;
+    align-self: flex-start; /* Align icon to the top edge */
+    transition: width 0.5s, height 0.5s; /* Smooth transition for size change */
+}
+
+.header-icon.animate {
+    transition: width 0.5s, height 0.5s; /* Smooth transition for size change */
+    width: 550px ; /* Increased width */
+    height: 550px; /* Increased height */
+}
+
+/* Vinyl Collection Styles */
 
 .vinyl-collection {
     display: flex;
@@ -84,6 +126,10 @@ header {
     z-index: 1; /* Ensure the vinyl is below the cover */
 }
 
+.vinyl.hidden, .vinyl-cover.hidden, .vinyl-container.hidden {
+    display: none; /* Hide elements */
+}
+
 .vinyl::before {
     content: '';
     width: 70px; /* Adjust the size of the hole */
@@ -101,4 +147,26 @@ header {
 .vinyl:hover {
     transform: rotateY(0deg); /* No rotation on hover */
 }
+
+.text-box {
+    padding-left: 10px;
+    padding-right: 1200px;
+    position: absolute;
+    top: 260px;
+    text-align: left;
+    color: #fff;
+    font-size: 12px;
+    z-index: 2; /* Ensure the text box is above the about me text */
+}
+
+.about-me-text {
+    padding-left: 10px;
+    position: absolute;
+    top: 350px; /* Adjust the top position to stack below the text box */
+    text-align: left;
+    color: #fff;
+    font-size: 12px;
+    z-index: 1; /* Ensure the about me text is below the text box */
+}
+
 
