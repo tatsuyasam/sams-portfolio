@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow-x: scroll; /* Enable horizontal scrolling */
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #00000000;
+    color: #fff;
+    text-align: left; /* Align text to the left */
+    padding: 10px;
+    z-index: 10; /* Ensure the header is above other elements */
+}
+
+.header-button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.header-button:hover {
+    background-color: #555;
+}
+
+.vinyl-collection {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    align-items: center;
+    justify-content: flex-start; /* Align items to the start for horizontal scrolling */
+    gap: 350px; /* Use gap to add spacing between vinyls without affecting their shape */
+    padding-left: calc(50vw - 200px); /* Center the first vinyl cover */
+    padding-right: calc(50vw - 200px); /* Center the last vinyl cover */
+    width: max-content; /* Ensure the collection takes up the necessary width */
+}
+
+.vinyl-container {
+    position: relative;
+    width: 400px; /* Adjust the size of the container */
+    height: 400px; /* Adjust the size of the container */
+    background-color: #444; /* Background color for the cover */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible; /* Allow the vinyl to be visible outside the cover */
+}
+
+.vinyl-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-color: #222; /* Background color for the cover */
+    z-index: 2; /* Ensure the cover is above the vinyl */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1; /* Set the desired opacity */
+}
+
+.vinyl {
+    position: absolute;
+    left: 1%; /* Start the vinyl off-screen to the left */
+    width: 380px; /* Adjust the size of the vinyls */
+    height: 380px; /* Adjust the size of the vinyls */
+    background-color: #bebebeb9;
+    border-radius: 50%; /* Ensure the vinyls are fully circular */
+    flex-shrink: 0; /* Prevent vinyls from shrinking */
+    transition: left 0.5s, transform 1s; /* Smooth transition for sliding effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 1; /* Ensure the vinyl is below the cover */
+}
+
+.vinyl::before {
+    content: '';
+    width: 70px; /* Adjust the size of the hole */
+    height: 70px; /* Adjust the size of the hole */
+    background-color: #000; /* Background color for the hole */
+    border-radius: 50%; /* Ensure the hole is fully circular */
+    z-index: 2; /* Ensure the hole is above the vinyl */
+}
+
+/* Hover effect to slide the vinyl to the left */
+.vinyl-container:hover .vinyl {
+    left: 60%;
+}
+
+.vinyl:hover {
+    transform: rotateY(0deg); /* No rotation on hover */
+}
+
