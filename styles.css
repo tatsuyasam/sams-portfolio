@@ -79,7 +79,7 @@ header {
     height: 100vh;
     align-items: center;
     justify-content: flex-start; /* Align items to the start for horizontal scrolling */
-    gap: 100px; /* Use gap to add spacing between vinyls without affecting their shape */
+    gap: 50px; /* Use gap to add spacing between vinyls without affecting their shape */
     padding-left: calc(50vw - 200px); /* Center the first vinyl cover */
     padding-right: calc(50vw - 200px); /* Center the last vinyl cover */
     width: max-content; /* Ensure the collection takes up the necessary width */
