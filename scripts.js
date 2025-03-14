@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mouse wheel scroll effect
     window.addEventListener('wheel', (event) => {
         event.preventDefault();
-        const vinylWidth = document.querySelector('.vinyl-container').offsetWidth + 100; // Width of vinyl + gap
+        const vinylWidth = document.querySelector('.vinyl-container').offsetWidth + 50; // Width of vinyl + gap
         window.scrollBy({
             left: event.deltaY < 0 ? -2 * vinylWidth : 2 * vinylWidth, // Scroll by the width of one vinyl
             behavior: 'smooth'
