@@ -81,49 +81,72 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const aboutMeButton = document.getElementById('about-me-button');
     const portfolioButton = document.getElementById('portfolio-button');
+    const contactButton = document.getElementById('contact-button');
 
     const headerIcon = document.getElementById('header-icon');
     const textBox = document.getElementById('text-box');
     const aboutMeText = document.getElementById('about-me-text');
+    const contactOptions = document.getElementById('contact-options');
 
     // Set the "SAM'S PORTFOLIO" button as initially active
     portfolioButton.classList.add('active');
 
-    aboutMeButton.addEventListener('click', () => {
-        // Highlight the "ABOUT ME" button
-        aboutMeButton.classList.add('active');
-        portfolioButton.classList.remove('active');
-
-        // Animate the header icon
-        headerIcon.classList.add('animate');
-
-        // Change the body background color and show the text box
-        document.body.classList.add('dark-grey-background');
-        textBox.style.display = 'block';
-        aboutMeText.style.display = 'block'; // Show the About Me text
-
-        // Hide the vinyl elements
+    const hideVinyls = () => {
         vinylContainers.forEach(container => container.classList.add('hidden'));
         vinylCovers.forEach(cover => cover.classList.add('hidden'));
         vinyls.forEach(vinyl => vinyl.classList.add('hidden'));
-    });
+    };
 
-    portfolioButton.addEventListener('click', () => {
-        // Highlight the "SAM'S PORTFOLIO" button
-        portfolioButton.classList.add('active');
-        aboutMeButton.classList.remove('active');
-
-        // Reset the header icon size smoothly
-        headerIcon.classList.remove('animate');
-
-        // Revert the body background color to black and hide the text box
-        document.body.classList.remove('dark-grey-background');
-        textBox.style.display = 'none';
-        aboutMeText.style.display = 'none'; // Hide the About Me text
-
-        // Unhide the vinyl elements
+    const showVinyls = () => {
         vinylContainers.forEach(container => container.classList.remove('hidden'));
         vinylCovers.forEach(cover => cover.classList.remove('hidden'));
         vinyls.forEach(vinyl => vinyl.classList.remove('hidden'));
+    };
+
+    const resetView = () => {
+        textBox.style.display = 'none';
+        aboutMeText.style.display = 'none';
+        contactOptions.style.display = 'none';
+        headerIcon.classList.remove('animate');
+    };
+
+    const clearActiveButtons = () => {
+        aboutMeButton.classList.remove('active');
+        portfolioButton.classList.remove('active');
+        contactButton.classList.remove('active');
+    };
+
+    aboutMeButton.addEventListener('click', () => {
+        clearActiveButtons();
+        aboutMeButton.classList.add('active');
+
+        headerIcon.classList.add('animate');
+        document.body.classList.add('dark-grey-background');
+        textBox.style.display = 'block';
+        aboutMeText.style.display = 'block';
+        contactOptions.style.display = 'none';
+
+        hideVinyls();
+    });
+
+    portfolioButton.addEventListener('click', () => {
+        clearActiveButtons();
+        portfolioButton.classList.add('active');
+
+        document.body.classList.remove('dark-grey-background');
+        resetView();
+
+        showVinyls();
+    });
+
+    contactButton.addEventListener('click', () => {
+        clearActiveButtons();
+        contactButton.classList.add('active');
+
+        document.body.classList.add('dark-grey-background');
+        resetView();
+        contactOptions.style.display = 'flex';
+
+        hideVinyls();
     });
 });
