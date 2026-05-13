@@ -115,18 +115,21 @@ body.dark-grey-background::before {
     height: max-content;
     z-index: 1;
     will-change: transform;
-    transition: transform 0.6s ease-out, opacity 0.4s ease;
     transform: translate(-50%, -50%);
+}
+
+.vinyl-collection.scrolling {
+    transition: transform 0.6s ease-out, opacity 0.4s ease;
 }
 
 .vinyl-container {
     position: absolute;
-    width: 320px; /* Adjust the size of the container */
-    height: 320px; /* Adjust the size of the container */
+    width: 320px;
+    height: 320px;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: visible; /* Allow the vinyl to be visible outside the cover */
+    overflow: visible;
     transform: skewY(5deg);
 }
 
@@ -136,13 +139,13 @@ body.dark-grey-background::before {
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-color: #222; /* Background color for the cover */
-    z-index: 2; /* Ensure the cover is above the vinyl */
+    background-color: #222;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.9; /* Set the desired opacity */
-    transform: skewY(5deg); /* Skew the cover to create a 3D effect */
+    opacity: 0.9;
+    transform: skewY(5deg);
 }
 
 .vinyl {
@@ -206,7 +209,7 @@ body.dark-grey-background::before {
 }
 
 .vinyl-animate.spin-slow {
-    animation: vinylSpinSlow 2.5s linear forwards;
+    animation: vinylSpinSlow 2.0s linear forwards;
 }
 
 .vinyl-animate .vinyl-image {
@@ -246,16 +249,16 @@ body.transitioning .vinyl:not(.fly-right) {
         transform: translate(0, 0) scale(1);
     }
     100% {
-        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.35);
+        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.2);
     }
 }
 
 @keyframes vinylSpinSlow {
     0% {
-        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.35) rotate(0deg);
+        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.2) rotate(0deg);
     }
     100% {
-        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.35) rotate(360deg);
+        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.2) rotate(360deg);
     }
 }
 
@@ -281,6 +284,7 @@ body.transitioning .vinyl:not(.fly-right) {
     object-fit: cover;
     opacity: 0.9;
     border-radius: 16px;
+    cursor: pointer;
 }
 
 .vinyl .vinyl-image {

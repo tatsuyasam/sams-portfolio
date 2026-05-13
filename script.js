@@ -23,9 +23,50 @@ const updateCollectionTransform = () => {
 setContainerPositions();
 updateCollectionTransform();
 
+// Auto-scroll animation on page load
+let autoScrollAnimationId;
+const autoScrollVinyls = () => {
+  let startTime = performance.now();
+  const duration = 1500; // Total animation duration in ms
+  const maxScroll = vinylContainers.length - 1;
+  
+  const animate = (currentTime) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Ease out animation for smooth deceleration
+    const easeProgress = 1 - Math.pow(1 - progress, 3);
+    
+    // Calculate smooth scroll position without rounding
+    const scrollAmount = easeProgress * maxScroll;
+    vinylCollection.style.transform = `translate(-50%, -50%) translate(${scrollAmount * itemSpacingX}px, ${-scrollAmount * itemSpacingY}px)`;
+    
+    if (progress < 1) {
+      autoScrollAnimationId = requestAnimationFrame(animate);
+    } else {
+      // Snap to final position
+      activeIndex = maxScroll;
+      updateCollectionTransform();
+    }
+  };
+  
+  autoScrollAnimationId = requestAnimationFrame(animate);
+};
+
+// Start auto-scroll immediately with entrance animation
+autoScrollVinyls();
+
+let isScrolling = false;
 window.addEventListener('wheel', (event) => {
   event.preventDefault();
+  
+  // Stop auto-scroll if user scrolls manually
+  if (autoScrollAnimationId) {
+    cancelAnimationFrame(autoScrollAnimationId);
+    autoScrollAnimationId = null;
+  }
 
+  vinylCollection.classList.add('scrolling');
   const direction = event.deltaY > 0 ? -1 : 1;
   activeIndex = clamp(activeIndex + direction, 0, vinylContainers.length - 1);
   updateCollectionTransform();
