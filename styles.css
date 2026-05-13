@@ -306,6 +306,21 @@ body.transitioning .vinyl:not(.fly-right) {
     opacity: 0.1;
 }
 
+/* Custom cursor text for vinyl covers */
+.custom-cursor-text {
+    position: fixed;
+    pointer-events: none;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    display: none;
+    font-family: Arial, sans-serif;
+    mix-blend-mode: difference;
+}
+
 /* Hover effect to slide the vinyl fully out of the cover */
 .vinyl-container:hover .vinyl {
     left: 95%;

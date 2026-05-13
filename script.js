@@ -120,6 +120,57 @@ contactButton.addEventListener('click', () => {
 
 let isNavigating = false;
 
+const customCursorText = document.getElementById('custom-cursor-text');
+let cursorTargetX = 0;
+let cursorTargetY = 0;
+let cursorCurrentX = 0;
+let cursorCurrentY = 0;
+let cursorAnimationFrame = null;
+
+const easeCursor = () => {
+  const ease = 0.16;
+  cursorCurrentX += (cursorTargetX - cursorCurrentX) * ease;
+  cursorCurrentY += (cursorTargetY - cursorCurrentY) * ease;
+  customCursorText.style.left = `${cursorCurrentX}px`;
+  customCursorText.style.top = `${cursorCurrentY}px`;
+  cursorAnimationFrame = requestAnimationFrame(easeCursor);
+};
+
+const updateCursorTarget = (e) => {
+  cursorTargetX = e.clientX + 10;
+  cursorTargetY = e.clientY + 10;
+  if (cursorAnimationFrame === null) {
+    cursorAnimationFrame = requestAnimationFrame(easeCursor);
+  }
+};
+
+vinylCovers.forEach((cover) => {
+  cover.addEventListener('mouseenter', (e) => {
+    const projectName = cover.dataset.projectName;
+    if (projectName) {
+      customCursorText.textContent = projectName;
+      customCursorText.style.display = 'block';
+      document.documentElement.style.cursor = 'none';
+      cursorCurrentX = e.clientX + 10;
+      cursorCurrentY = e.clientY + 10;
+      updateCursorTarget(e);
+    }
+  });
+
+  cover.addEventListener('mousemove', (e) => {
+    updateCursorTarget(e);
+  });
+
+  cover.addEventListener('mouseleave', () => {
+    customCursorText.style.display = 'none';
+    document.documentElement.style.cursor = '';
+    if (cursorAnimationFrame !== null) {
+      cancelAnimationFrame(cursorAnimationFrame);
+      cursorAnimationFrame = null;
+    }
+  });
+});
+
 vinyls.forEach((vinyl) => {
   vinyl.addEventListener('click', () => {
     if (isNavigating) return;
