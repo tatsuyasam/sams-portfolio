@@ -85,6 +85,7 @@ vinyls.forEach((vinyl) => {
     const targetUrl = vinyl.dataset.projectUrl || 'project.html';
     isNavigating = true;
     document.body.classList.add('transitioning');
+    document.body.classList.add('dark-grey-background');
 
     const rect = vinyl.getBoundingClientRect();
     const image = vinyl.querySelector('.vinyl-image');
@@ -130,7 +131,7 @@ vinyls.forEach((vinyl) => {
       clone.classList.add('spin-slow');
       setTimeout(() => {
         window.location.href = targetUrl;
-      }, 1200);
+      }, 2500);
     }, { once: true });
   });
 });
