@@ -101,7 +101,7 @@ aboutMeButton.addEventListener('click', () => {
     if (headerIcon) headerIcon.classList.add('animate');
     document.body.classList.add('dark-grey-background');
     if (textBox) textBox.style.display = 'block';
-    if (aboutMeText) aboutMeText.style.display = 'block';
+    if (aboutMeText) aboutMeText.style.display = 'grid';
     if (contactOptions) contactOptions.style.display = 'none';
 });
 portfolioButton.addEventListener('click', () => {

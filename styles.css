@@ -461,13 +461,31 @@ body.transitioning .vinyl:not(.fly-right) {
     top: 190px;
     left: 10px;
     right: 10px;
-    max-width: 560px;
+    max-width: 900px;
     text-align: left;
     color: #fff;
     font-size: 12px;
     z-index: 10;
-    display: none;
+    display: grid;
+    grid-template-columns: minmax(120px, 200px) 1fr;
+    gap: 30px;
+    align-items: start;
 }
+
+.about-me-text h1,h2 {
+    margin: 0;
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.85;
+}
+
+
+.about-me-text p1,p2 {
+    margin: 0;
+    font-size: 11px;
+    color: #a8a8a8;
+}
+
 
 .contact-options {
     position: absolute;
