@@ -86,7 +86,7 @@ portfolioButton.classList.add('active')
 
 const resetView = () => {
     if (textBox) textBox.style.display = 'none';
-    if (aboutMeText) aboutMeText.style.display = 'none';
+    if (aboutMeText) aboutMeText.classList.remove('visible');
     if (contactOptions) contactOptions.style.display = 'none';
     if (headerIcon) headerIcon.classList.remove('animate');
 };
@@ -101,7 +101,7 @@ aboutMeButton.addEventListener('click', () => {
     if (headerIcon) headerIcon.classList.add('animate');
     document.body.classList.add('dark-grey-background');
     if (textBox) textBox.style.display = 'block';
-    if (aboutMeText) aboutMeText.style.display = 'grid';
+    if (aboutMeText) aboutMeText.classList.add('visible');
     if (contactOptions) contactOptions.style.display = 'none';
 });
 portfolioButton.addEventListener('click', () => {
