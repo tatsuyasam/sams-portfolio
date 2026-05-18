@@ -7,42 +7,43 @@
   <link rel="stylesheet" href="project.css">
 </head>
 <body>
-  <header style="text-align: center; padding: 20px;">
-    <a href="../index.html" class="btn back-btn" style="font-size: 1.2em;">← Back to Portfolio</a>
+  <header class="project-header-bar">
+    <a href="../index.html" class="back-btn">← Return to Portfolio</a>
+    <img src="../header-icon.png" alt="Icon" class="header-icon">
   </header>
-  
-  <div class="project-header">
-    <h1 class="project-title">3D Vinyl Gallery</h1>
-    <p class="project-subtitle">WebGL-powered interactive 3D record collection</p>
-  </div>
-  
-  <div class="project-content">
-    <div class="screenshots">
-      <div class="screenshot">
-        <img src="../cover 6.png" alt="3D Scene">
-        <div class="screenshot-caption">Interactive 3D environment</div>
+
+  <main class="project-page">
+    <section class="hero-section">
+      <div class="hero-image">
+        <img src="../projects/06-TOBARA/cover 1.png" alt="3D gallery hero image">
       </div>
-      <div class="screenshot">
-        <img src="../cover 1.png" alt="Controls">
-        <div class="screenshot-caption">Orbit controls & lighting</div>
+      <div class="hero-copy">
+        <p class="eyebrow">Project 6</p>
+        <h1 class="project-title">3D Vinyl Gallery</h1>
+        <p class="project-subtitle">A WebGL-powered interactive record collection built to showcase motion, lighting, and spatial design.</p>
       </div>
-    </div>
-    
-    <div class="features">
-      <h3>Key Features</h3>
-      <ul>
-        <li>Three.js for 3D rendering</li>
-        <li>Realistic physically-based materials</li>
-        <li>Dynamic lighting & shadows</li>
-        <li>VR/AR ready (WebXR)</li>
-        <li>60fps performance optimization</li>
-      </ul>
-    </div>
-    
-    <div class="buttons">
-      <a href="#" class="btn">Interactive Demo</a>
-      <a href="#" class="btn">GitHub Repo</a>
-    </div>
-  </div>
+    </section>
+
+    <section class="text-image-section">
+      <div class="text-block">
+        <h2>Project overview</h2>
+        <p>This experimental page highlights immersive 3D environments layered with vinyl-inspired visual styling, controls, and detail views.</p>
+        <p>The gallery balances animation with readability, delivering an engaging interactive experience for browsers and creative portfolios.</p>
+      </div>
+      <div class="feature-image">
+        <img src="../projects/06-TOBARA/cover 2.png" alt="3D gallery detail image">
+      </div>
+    </section>
+
+    <section class="gallery-section">
+      <h2>Gallery</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="../projects/06-TOBARA/cover 3.png" alt="Gallery image 1"></div>
+        <div class="gallery-item"><img src="../projects/06-TOBARA/cover 4.png" alt="Gallery image 2"></div>
+        <div class="gallery-item"><img src="../projects/06-TOBARA/cover 5.png" alt="Gallery image 3"></div>
+        <div class="gallery-item"><img src="../projects/06-TOBARA/cover 6.png" alt="Gallery image 4"></div>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
