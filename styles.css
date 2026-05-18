@@ -501,6 +501,7 @@ body.transitioning .vinyl:not(.fly-right) {
     font: inherit;     
     color: inherit;      
     outline: inherit;    
+    cursor: pointer;
 }
 
 .about-me-text.visible {
