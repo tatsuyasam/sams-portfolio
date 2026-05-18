@@ -31,7 +31,7 @@ a {
   gap: 0.6rem;
   border: 1px solid rgba(255,255,255,0.18);
   padding: 12px 18px;
-  border-radius: 999px;
+  border-radius: 12px;
   color: #fff;
   font-weight: 600;
   transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
@@ -62,7 +62,7 @@ a {
 }
 
 .hero-image {
-  border-radius: 28px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 30px 90px rgba(0,0,0,0.35);
 }
