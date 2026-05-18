@@ -74,7 +74,9 @@ window.addEventListener('wheel', (event) => {
 
 const aboutMeButton = document.getElementById('about-me-button');
 const portfolioButton = document.getElementById('portfolio-button');
-const contactButton = document.getElementById('contact-button')
+const contactButton = document.getElementById('contact-button');
+const award1Button = document.querySelector('.award1-button');
+const award2Button = document.querySelector('.award2-button');
 const headerIcon = document.getElementById('header-icon');
 const textBox = document.getElementById('text-box');
 const aboutMeText = document.getElementById('about-me-text');
@@ -117,6 +119,17 @@ contactButton.addEventListener('click', () => {
     resetView();
     if (contactOptions) contactOptions.style.display = 'flex';
 });
+if (award1Button) {
+  award1Button.addEventListener('click', () => {
+    window.open('https://www.worldskills.sg/skills/all-champions/-/-/digital-construction/gold-award/', '_blank');
+  });
+}
+if (award2Button) {
+  award2Button.addEventListener('click', () => {
+    window.open('https://seedaward.sg/dbcs-seed-award-winners/2025/', '_blank');
+  });
+}
+
 
 let isNavigating = false;
 
@@ -223,7 +236,7 @@ vinyls.forEach((vinyl) => {
       clone.classList.add('spin-slow');
       setTimeout(() => {
         window.location.href = targetUrl;
-      }, 2500);
+      }, 1000);
     }, { once: true });
   });
 });

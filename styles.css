@@ -209,7 +209,7 @@ body.dark-grey-background::before {
 }
 
 .vinyl-animate.spin-slow {
-    animation: vinylSpinSlow 2.0s linear forwards;
+    animation: vinylSpinSlow 1.5s linear forwards;
 }
 
 .vinyl-animate .vinyl-image {
@@ -489,6 +489,19 @@ body.transitioning .vinyl:not(.fly-right) {
     color: #fff;
 }
 
+.award1-button, .award2-button {
+    background-color: #27272700;
+    color: #fff;
+    border: solid #a8a8a800;
+    font-size: 12px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;     
+    color: inherit;      
+    outline: inherit;    
+}
 
 .about-me-text.visible {
     visibility: visible;
