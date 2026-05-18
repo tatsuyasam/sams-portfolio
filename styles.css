@@ -4,6 +4,7 @@
 }
 
 html,
+
 body {
     margin: 0;
     min-height: 100%;
@@ -36,7 +37,7 @@ header {
     background-color: #272727;
     color: #a8a8a8;
     border: 1px solid #a8a8a8;
-    padding: 30px 60px 10px 12px;
+    padding: 35px 60px 8px 12px;
     cursor: pointer;
     font-size: 11px; /* Reduce the font size */
     display: flex;
@@ -306,6 +307,15 @@ body.transitioning .vinyl:not(.fly-right) {
     opacity: 0.1;
 }
 
+/* Hover effect to slide the vinyl fully out of the cover */
+.vinyl-container:hover .vinyl {
+    left: 95%;
+}
+
+.vinyl:hover {
+    transform: rotate(0deg); /* No rotation on hover */
+}
+
 /* Custom cursor text for vinyl covers */
 .custom-cursor-text {
     position: fixed;
@@ -321,15 +331,133 @@ body.transitioning .vinyl:not(.fly-right) {
     mix-blend-mode: difference;
 }
 
-/* Hover effect to slide the vinyl fully out of the cover */
-.vinyl-container:hover .vinyl {
-    left: 95%;
+.text-box {
+    position: absolute;
+    top: 250px;
+    left: 10px;
+    right: 10px;
+    max-width: 560px;
+    padding: 12px;
+    background: rgba(20, 20, 20, 0.9);
+    border-radius: 14px;
+    color: #fff;
+    text-align: left;
+    display: none;
+    font-size: 12px;
+    z-index: 10;
 }
 
-.vinyl:hover {
-    transform: rotate(0deg); /* No rotation on hover */
+.about-me-text {
+    padding-left: 11px;
+    position: absolute;
+    top: 400px;
+    left: 10px;
+    right: 10px;
+    max-width: 900px;
+    text-align: left;
+    color: #fff;
+    font-size: 10px;
+    z-index: 10;
+    display: grid;
+    visibility: hidden;
+    opacity: 0;
+    grid-template-columns: minmax(0px, 200px) 1fr;
+    gap: 20px;
+    align-items: start;
+    transition: opacity 180ms ease, visibility 180ms ease;
 }
 
+.about-me-text h1,h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    color: #ffffff9d;
+}
+
+.about-me-text p1,p2 {
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+    color: #fff;
+}
+
+.award1-button, .award2-button {
+    background-color: #27272700;
+    color: #fff;
+    border: solid #a8a8a800;
+    font-size: 11px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;     
+    color: inherit;      
+    outline: inherit;    
+    cursor: pointer;
+}
+
+.about-me-text.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
+.contact-options {
+    position: absolute;
+    top: 400px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 10;
+    transition: 50ms;
+}
+
+.email-button {
+    background-color: #272727;
+    color: #ffffffbb;
+    border: 1px solid #a8a8a8;
+    padding: 12px 25px;
+    border-radius: 5px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.email-button:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+.linkedin-button {
+    background-color: #272727;
+    color: #ffffffbb;
+    border: 1px solid #a8a8a8;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.linkedin-button:hover {
+    border-color: #fff;
+    color: #fff;
+}
+
+.insta-button {
+    background-color: #272727;
+    color: #ffffffbb;
+    border: 1px solid #a8a8a8;
+    padding: 12px 25px;
+    border-radius: 50px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.insta-button:hover {
+    border-color: #fff;
+    color: #fff;
+}
 
 @media (max-width: 900px) {
     .header-button {
@@ -444,132 +572,4 @@ body.transitioning .vinyl:not(.fly-right) {
     .contact-button {
         width: 100%;
     }
-}
-
-.text-box {
-    position: absolute;
-    top: 90px;
-    left: 10px;
-    right: 10px;
-    max-width: 560px;
-    padding: 12px;
-    background: rgba(20, 20, 20, 0.9);
-    border-radius: 14px;
-    color: #fff;
-    text-align: left;
-    display: none;
-    font-size: 12px;
-    z-index: 10;
-}
-
-.about-me-text {
-    padding-left: 10px;
-    position: absolute;
-    top: 190px;
-    left: 10px;
-    right: 10px;
-    max-width: 900px;
-    text-align: left;
-    color: #fff;
-    font-size: 12px;
-    z-index: 10;
-    display: grid;
-    visibility: hidden;
-    opacity: 0;
-    grid-template-columns: minmax(120px, 200px) 1fr;
-    gap: 30px;
-    align-items: start;
-    transition: opacity 180ms ease, visibility 180ms ease;
-}
-
-.about-me-text h1,h2 {
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-    color: #ffffff9d;
-}
-
-.about-me-text p1,p2 {
-    margin: 0;
-    padding: 0;
-    font-size: 12px;
-    color: #fff;
-}
-
-.award1-button, .award2-button {
-    background-color: #27272700;
-    color: #fff;
-    border: solid #a8a8a800;
-    font-size: 12px;
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    font: inherit;     
-    color: inherit;      
-    outline: inherit;    
-    cursor: pointer;
-}
-
-.about-me-text.visible {
-    visibility: visible;
-    opacity: 1;
-}
-
-.contact-options {
-    position: absolute;
-    top: 400px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    z-index: 10;
-    transition: 50ms;
-}
-
-.email-button {
-    background-color: #272727;
-    color: #ffffffbb;
-    border: 1px solid #a8a8a8;
-    padding: 12px 25px;
-    border-radius: 5px;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.email-button:hover {
-    border-color: #fff;
-    color: #fff;
-}
-
-.linkedin-button {
-    background-color: #272727;
-    color: #ffffffbb;
-    border: 1px solid #a8a8a8;
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.linkedin-button:hover {
-    border-color: #fff;
-    color: #fff;
-}
-
-.insta-button {
-    background-color: #272727;
-    color: #ffffffbb;
-    border: 1px solid #a8a8a8;
-    padding: 12px 25px;
-    border-radius: 50px;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.insta-button:hover {
-    border-color: #fff;
-    color: #fff;
 }
