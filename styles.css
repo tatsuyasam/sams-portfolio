@@ -375,10 +375,17 @@ body.transitioning .vinyl:not(.fly-right) {
     }
 
     .header-icon {
-        width: 36px;
-        height: 36px;
-        margin-left: 0;
-        align-self: center;
+        margin-left: auto; /* Push the icon to the right */
+        width: 100px;
+        height: 100px;
+        cursor: pointer; /* Change cursor to pointer on hover */
+        padding: 8px;
+        align-self: flex-start; /* Align icon to the top edge */
+        transition: width 0.5s, height 0.5s, border-color 0.3s ease;
+        border: 2px solid #a8a8a8;
+        background-color:  rgba(0, 0, 0, 0.486);
+        border-radius: 10px;
+        object-fit: cover;
     }
 
     .vinyl-collection {
