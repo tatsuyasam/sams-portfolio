@@ -4,7 +4,7 @@ const vinylCovers = Array.from(document.querySelectorAll('.vinyl-cover'));
 const vinyls = Array.from(document.querySelectorAll('.vinyl'));
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-const itemSpacingX = 320;
+const itemSpacingX = 290; // smaller spacing creates a gentle overlap between vinyl covers
 const itemSpacingY = 140;
 let activeIndex = 0;
 
@@ -25,6 +25,7 @@ updateCollectionTransform();
 
 // Auto-scroll animation on page load
 let autoScrollAnimationId;
+let autoScrollProgress = 0;
 const autoScrollVinyls = () => {
   let startTime = performance.now();
   const duration = 1500; // Total animation duration in ms
@@ -39,6 +40,7 @@ const autoScrollVinyls = () => {
     
     // Calculate smooth scroll position without rounding
     const scrollAmount = easeProgress * maxScroll;
+    autoScrollProgress = scrollAmount;
     vinylCollection.style.transform = `translate(-50%, -50%) translate(${scrollAmount * itemSpacingX}px, ${-scrollAmount * itemSpacingY}px)`;
     
     if (progress < 1) {
@@ -57,6 +59,8 @@ const autoScrollVinyls = () => {
 autoScrollVinyls();
 
 let isScrolling = false;
+const scrollStep = 0.5; // Smaller fraction per wheel event makes scroll less sensitive
+
 window.addEventListener('wheel', (event) => {
   event.preventDefault();
   
@@ -64,11 +68,12 @@ window.addEventListener('wheel', (event) => {
   if (autoScrollAnimationId) {
     cancelAnimationFrame(autoScrollAnimationId);
     autoScrollAnimationId = null;
+    activeIndex = clamp(autoScrollProgress, 0, vinylContainers.length - 1);
   }
 
   vinylCollection.classList.add('scrolling');
   const direction = event.deltaY > 0 ? -1 : 1;
-  activeIndex = clamp(activeIndex + direction, 0, vinylContainers.length - 1);
+  activeIndex = clamp(activeIndex + direction * scrollStep, 0, vinylContainers.length - 1);
   updateCollectionTransform();
 }, { passive: false });
 
