@@ -454,14 +454,36 @@ vinyls.forEach((vinyl) => {
   });
 });
 
-// Create a fake history entry
+// Create fake history state
 history.pushState(null, null, location.href);
 
-// Detect back navigation
+// Handle browser back button
 window.addEventListener("popstate", () => {
-    // Prevent actually going back
     history.pushState(null, null, location.href);
 
-    // Refresh the page
-    location.reload();
+    // Force hard refresh
+    window.location.reload();
+});
+
+// Fix cached animation states when returning to page
+window.addEventListener("pageshow", (event) => {
+    if (event.persisted) {
+        // Remove transition classes
+        document.body.classList.remove('transitioning');
+        document.body.classList.remove('dark-grey-background');
+
+        // Remove cloned animation elements
+        document.querySelectorAll('.vinyl-animate').forEach(el => el.remove());
+
+        // Restore all vinyl visibility
+        document.querySelectorAll('.vinyl').forEach(vinyl => {
+            vinyl.style.visibility = 'visible';
+        });
+
+        // Reset navigation lock
+        isNavigating = false;
+
+        // Force layout refresh
+        updateCollectionTransform();
+    }
 });
