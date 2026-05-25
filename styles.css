@@ -73,6 +73,7 @@ header {
     background-color:  rgba(0, 0, 0, 0.486);
     border-radius: 10px;
     object-fit: cover;
+    filter: brightness(250%)
 }
 
 .header-icon.animate {
@@ -142,7 +143,7 @@ body.dark-grey-background::before {
     height: 100%;
     background-size: cover;
     background-position: center;
-    background-color: #222;
+    background-color: #22222200;
     z-index: 2;
     display: flex;
     align-items: center;
@@ -154,15 +155,15 @@ body.dark-grey-background::before {
 .vinyl {
     position: absolute;
     top: 0;
-    left: 3%;
+    left: 0;
     width: 320px;
     height: 320px;
     background: repeating-radial-gradient(
         circle at center,
-        #2a2a2a 0px,
-        #2a2a2a 3px,
-        #0a0a0a 3px,
-        #0a0a0a 5px
+        #202020 0px,
+        #202020 1px,
+        #0a0a0a 1px,
+        #0a0a0a 6px
     );
     border-radius: 50%;
     flex-shrink: 0;
