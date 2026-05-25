@@ -40,8 +40,8 @@ let touchStartY = null;
 let touchCurrentY = null;
 let touchMoved = false;
 let touchAccumulated = 0;
-const touchThreshold = 16;
-const touchStep = 0.25; // Lower sensitivity for touch
+const touchThreshold = 8;
+const touchStep = 0.35; // Increased for better responsiveness
 let lastTouchedCover = null;
 let touchHoverTimeout = null;
 

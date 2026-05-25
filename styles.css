@@ -345,6 +345,7 @@ body.touch-device .vinyl-cover.touch-hover {
 }
 
 body.touch-device .vinyl-cover.touch-hover .vinyl {
+    left: 95%;
     transform: translate(0, 0) scale(1.05);
 }
 
