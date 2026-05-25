@@ -454,7 +454,15 @@ vinyls.forEach((vinyl) => {
   });
 });
 
-window.addEventListener("popstate", (event) => {
-    // Refresh the page instead of going back
+// Detect browser history navigation
+window.addEventListener("popstate", () => {
     location.reload();
+});
+
+// Detect mouse back button
+window.addEventListener("mouseup", (event) => {
+    if (event.button === 3) {
+        event.preventDefault();
+        location.reload();
+    }
 });
