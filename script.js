@@ -191,7 +191,7 @@ let autoScrollProgress = 0;
 const autoScrollVinyls = () => {
   let startTime = performance.now();
   const duration = 1500; // Total animation duration in ms
-  const maxScroll = vinylContainers.length - 1;
+  const maxScroll = vinylContainers.length - 2;
   
   const animate = (currentTime) => {
     const elapsed = currentTime - startTime;
