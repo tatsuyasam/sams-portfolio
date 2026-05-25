@@ -448,42 +448,42 @@ vinyls.forEach((vinyl) => {
     clone.addEventListener('animationend', () => {
       clone.classList.add('spin-slow');
       setTimeout(() => {
+        sessionStorage.setItem("navigating", "true");
         window.location.href = targetUrl;
       }, 1000);
     }, { once: true });
   });
 });
 
-// Create fake history state
+// Add fake history state
 history.pushState(null, null, location.href);
 
-// Handle browser back button
+// Intercept back button
 window.addEventListener("popstate", () => {
     history.pushState(null, null, location.href);
-
-    // Force hard refresh
-    window.location.reload();
 });
 
-// Fix cached animation states when returning to page
+
 window.addEventListener("pageshow", (event) => {
-    if (event.persisted) {
-        // Remove transition classes
-        document.body.classList.remove('transitioning');
-        document.body.classList.remove('dark-grey-background');
 
-        // Remove cloned animation elements
-        document.querySelectorAll('.vinyl-animate').forEach(el => el.remove());
+    if (!sessionStorage.getItem("navigating")) return;
 
-        // Restore all vinyl visibility
-        document.querySelectorAll('.vinyl').forEach(vinyl => {
-            vinyl.style.visibility = 'visible';
-        });
+    sessionStorage.removeItem("navigating");
 
-        // Reset navigation lock
-        isNavigating = false;
+    document.body.classList.remove('transitioning');
+    document.body.classList.remove('dark-grey-background');
 
-        // Force layout refresh
-        updateCollectionTransform();
-    }
+    document.querySelectorAll('.vinyl-animate').forEach(el => {
+        el.remove();
+    });
+
+    document.querySelectorAll('.vinyl').forEach(vinyl => {
+        vinyl.style.visibility = 'visible';
+    });
+
+    isNavigating = false;
+
+    updateCollectionTransform();
+
+    document.body.offsetHeight;
 });
