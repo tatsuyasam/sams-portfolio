@@ -153,8 +153,8 @@ body.dark-grey-background::before {
     position: absolute;
     top: 0;
     left: 3%;
-    width: 310px;
-    height: 310px;
+    width: 320px;
+    height: 320px;
     background: repeating-radial-gradient(
         circle at center,
         #2a2a2a 0px,
@@ -525,32 +525,41 @@ body.touch-device .vinyl-container:hover .vinyl {
     }
 
     .vinyl-collection {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        width: 100%;
-        padding: 100px 12px 18px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 14px;
+        position: fixed;
+        top: 32%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: max-content;
+        padding: 0;
+        display: block;
     }
 
     .vinyl-container {
-        position: relative;
-        width: 100%;
-        height: auto;
-        transform: none;
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+        transform: skewY(5deg);
         top: auto;
         left: auto;
     }
 
     .vinyl-cover {
-        position: relative;
+        position: absolute;
         width: 100%;
-        height: auto;
-        aspect-ratio: 1 / 1;
-        transform: none;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-color: #222;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.9;
+        transform: skewY(5deg);
     }
 
     .vinyl-cover .cover-image,
@@ -559,14 +568,15 @@ body.touch-device .vinyl-container:hover .vinyl {
         inset: 0;
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
 
     .vinyl {
         position: absolute;
-        top: 10%;
-        left: 10%;
-        width: 80%;
-        height: 80%;
+        top: 0;
+        left: 3%;
+        width: 170px;
+        height: 170px;
         transform: none;
     }
 

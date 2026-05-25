@@ -4,8 +4,36 @@ const vinylCovers = Array.from(document.querySelectorAll('.vinyl-cover'));
 const vinyls = Array.from(document.querySelectorAll('.vinyl'));
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-const itemSpacingX = 290; // smaller spacing creates a gentle overlap between vinyl covers
-const itemSpacingY = 140;
+
+// Calculate responsive spacing based on viewport size and aspect ratio
+let itemSpacingX = 290;
+let itemSpacingY = 140;
+
+const calculateResponsiveSpacing = () => {
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const aspectRatio = viewportWidth / viewportHeight;
+  
+  // On portrait phones and small devices, use exact 45-degree spacing
+  if (viewportWidth < 700 && aspectRatio <= 1.05) {
+    const spacing = Math.max(viewportWidth * 0.27, 70);
+    itemSpacingX = spacing;
+    itemSpacingY = spacing;
+  }
+  // On tablets / larger devices, use medium spacing
+  else if (viewportWidth < 900) {
+    itemSpacingX = 220;
+    itemSpacingY = 110;
+  }
+  // On desktop (>= 900px), use default spacing
+  else {
+    itemSpacingX = 290;
+    itemSpacingY = 140;
+  }
+};
+
+calculateResponsiveSpacing();
+
 let activeIndex = 0;
 const supportsTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 let touchStartY = null;
@@ -104,6 +132,13 @@ const autoScrollVinyls = () => {
 
 // Start auto-scroll immediately with entrance animation
 autoScrollVinyls();
+
+// Handle window resize to recalculate spacing
+window.addEventListener('resize', () => {
+  calculateResponsiveSpacing();
+  setContainerPositions();
+  updateCollectionTransform();
+});
 
 let isScrolling = false;
 const scrollStep = 0.5; // Smaller fraction per wheel event makes scroll less sensitive
