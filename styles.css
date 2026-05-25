@@ -176,7 +176,7 @@ body.dark-grey-background::before {
 }
 
 .vinyl.fly-right {
-    animation: spinFlyRight 1.8s ease-in forwards;
+    animation: spinFlyRight 2s ease-in forwards;
     z-index: 20;
 }
 
