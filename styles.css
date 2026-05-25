@@ -25,12 +25,12 @@ header {
     width: 100%;
     background-color: transparent;
     color: #fff;
-    text-align: left; /* Align text to the left */
+    text-align: left;
     padding: 5px;
-    z-index: 10; /* Ensure the header is above other elements */
-    display: flex; /* Add flex display to arrange buttons side by side */
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    align-items: flex-start; /* Align items to the top edge */
+    z-index: 100;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .header-button {
@@ -611,20 +611,24 @@ body.touch-device .vinyl-cover.touch-hover::after {
     }
 
     .contact-options {
-        display: flex;
+        display: absolute;
         flex-direction: column;
         gap: 8px;
-        padding: 8px;
+        padding: 5px;
         position: relative;
         top: auto;
         left: auto;
         transform: none;
-        margin: 8px;
-        width: auto;
+        margin: 8px auto;
+        margin-top: 120px;
+        width: fit-content;
+        max-width: 90%;
     }
 
     .contact-button {
-        width: 100%;
+        width: auto;
+        padding: 5px 20px;
+        font-size: 10px;
     }
 
     .text-box {
@@ -634,8 +638,9 @@ body.touch-device .vinyl-cover.touch-hover::after {
         right: auto;
         max-width: none;
         margin: 8px;
+        margin-top: 140px;
         padding: 8px;
-        font-size: 10px;
+        font-size: 11px;
         border-radius: 10px;
     }
 
@@ -646,7 +651,18 @@ body.touch-device .vinyl-cover.touch-hover::after {
         right: auto;
         max-width: none;
         padding: 0 8px 8px;
+        margin-top: 40px;
         grid-template-columns: 1fr;
-        font-size: 9px;
+        font-size: 10px;
+    }
+
+    .about-me-text h1,
+    .about-me-text h2 {
+        font-size: 10px;
+    }
+
+    .about-me-text p1,
+    .about-me-text p2 {
+        font-size: 10px;
     }
 }
