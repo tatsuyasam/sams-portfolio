@@ -7,6 +7,15 @@ const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 const itemSpacingX = 290; // smaller spacing creates a gentle overlap between vinyl covers
 const itemSpacingY = 140;
 let activeIndex = 0;
+const supportsTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+let touchStartY = null;
+let touchCurrentY = null;
+let touchMoved = false;
+const touchThreshold = 10;
+
+if (supportsTouch) {
+  document.body.classList.add('touch-device');
+}
 
 const setContainerPositions = () => {
   vinylContainers.forEach((container, index) => {
@@ -22,6 +31,44 @@ const updateCollectionTransform = () => {
 
 setContainerPositions();
 updateCollectionTransform();
+
+window.addEventListener('touchstart', (event) => {
+  if (event.touches.length !== 1) return;
+  touchStartY = event.touches[0].clientY;
+  touchCurrentY = touchStartY;
+  touchMoved = false;
+  if (autoScrollAnimationId) {
+    cancelAnimationFrame(autoScrollAnimationId);
+    autoScrollAnimationId = null;
+    activeIndex = clamp(activeIndex, 0, vinylContainers.length - 1);
+  }
+}, { passive: false });
+
+window.addEventListener('touchmove', (event) => {
+  if (!supportsTouch || touchStartY === null || event.touches.length !== 1) return;
+  const touchY = event.touches[0].clientY;
+  const deltaY = touchY - touchCurrentY;
+  if (Math.abs(deltaY) < 2) return;
+  touchMoved = true;
+  touchCurrentY = touchY;
+  event.preventDefault();
+  vinylCollection.classList.add('scrolling');
+  const direction = deltaY > 0 ? 1 : -1;
+  activeIndex = clamp(activeIndex + direction * scrollStep, 0, vinylContainers.length - 1);
+  updateCollectionTransform();
+}, { passive: false });
+
+window.addEventListener('touchend', () => {
+  touchStartY = null;
+  touchCurrentY = null;
+  touchMoved = false;
+});
+
+window.addEventListener('touchcancel', () => {
+  touchStartY = null;
+  touchCurrentY = null;
+  touchMoved = false;
+});
 
 // Auto-scroll animation on page load
 let autoScrollAnimationId;
@@ -185,6 +232,25 @@ vinylCovers.forEach((cover) => {
     if (cursorAnimationFrame !== null) {
       cancelAnimationFrame(cursorAnimationFrame);
       cursorAnimationFrame = null;
+    }
+  });
+
+  cover.addEventListener('touchstart', (event) => {
+    if (event.touches.length === 1) {
+      touchStartY = event.touches[0].clientY;
+      touchCurrentY = touchStartY;
+      touchMoved = false;
+    }
+  }, { passive: true });
+
+  cover.addEventListener('touchend', (event) => {
+    if (touchStartY === null) return;
+    const touchEndY = event.changedTouches[0].clientY;
+    if (Math.abs(touchEndY - touchStartY) > touchThreshold) return;
+    const vinyl = cover.querySelector('.vinyl');
+    const targetUrl = vinyl?.dataset.projectUrl;
+    if (targetUrl && !isNavigating) {
+      window.location.href = targetUrl;
     }
   });
 });

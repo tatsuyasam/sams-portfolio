@@ -331,6 +331,14 @@ body.transitioning .vinyl:not(.fly-right) {
     mix-blend-mode: difference;
 }
 
+body.touch-device .custom-cursor-text {
+    display: none !important;
+}
+
+body.touch-device .vinyl-container:hover .vinyl {
+    left: 3%;
+}
+
 .text-box {
     position: absolute;
     top: 250px;
@@ -567,9 +575,34 @@ body.transitioning .vinyl:not(.fly-right) {
         flex-direction: column;
         gap: 10px;
         padding: 12px;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin: 14px 12px 0;
+        width: auto;
     }
 
     .contact-button {
         width: 100%;
+    }
+
+    .text-box {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        max-width: none;
+        margin: 12px;
+    }
+
+    .about-me-text {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        max-width: none;
+        padding: 0 12px 12px;
+        grid-template-columns: 1fr;
     }
 }
