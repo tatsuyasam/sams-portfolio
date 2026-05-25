@@ -249,15 +249,15 @@ window.addEventListener('wheel', (event) => {
 const aboutMeButton = document.getElementById('about-me-button');
 const portfolioButton = document.getElementById('portfolio-button');
 const contactButton = document.getElementById('contact-button');
-const award1Button = document.querySelector('.award1-button');
-const award2Button = document.querySelector('.award2-button');
 const headerIcon = document.getElementById('header-icon');
 const textBox = document.getElementById('text-box');
 const aboutMeText = document.getElementById('about-me-text');
+const award1Button = document.querySelector('.award1-button');
+const award2Button = document.querySelector('.award2-button');
 const contactOptions = document.getElementById('contact-options');
-const emailbutton = document.getElementById('email-button');
-const linkedinButton = document.getElementById('linkedin-button');
-const instaButton = document.getElementById('insta-button');
+const emailbutton = document.querySelector('.email-button');
+const linkedinButton = document.querySelector('.linkedin-button');
+const instaButton = document.querySelector('.insta-button');
 
 // Set the "SAM'S PORTFOLIO" button as initially active
 portfolioButton.classList.add('active')

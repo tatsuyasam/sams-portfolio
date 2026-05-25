@@ -422,18 +422,14 @@ body.touch-device .vinyl-cover.touch-hover::after {
 }
 
 .award1-button, .award2-button {
-    background-color: #27272700;
+    background-color: #272727;
     color: #ffffffbb;
-    border: solid #a8a8a8;
+    border: 1px solid #a8a8a8;
     font-size: 11px;
-    background: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    font: inherit;     
-    color: inherit;      
-    outline: inherit;    
+    padding: 8px 12px;
+    margin: 4px 0;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 .award1-button:hover, .award2-button:hover {
