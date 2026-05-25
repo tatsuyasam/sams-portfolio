@@ -454,15 +454,14 @@ vinyls.forEach((vinyl) => {
   });
 });
 
-// Detect browser history navigation
-window.addEventListener("popstate", () => {
-    location.reload();
-});
+// Create a fake history entry
+history.pushState(null, null, location.href);
 
-// Detect mouse back button
-window.addEventListener("mouseup", (event) => {
-    if (event.button === 3) {
-        event.preventDefault();
-        location.reload();
-    }
+// Detect back navigation
+window.addEventListener("popstate", () => {
+    // Prevent actually going back
+    history.pushState(null, null, location.href);
+
+    // Refresh the page
+    location.reload();
 });
