@@ -39,7 +39,29 @@ const supportsTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 let touchStartY = null;
 let touchCurrentY = null;
 let touchMoved = false;
-const touchThreshold = 10;
+let touchAccumulated = 0;
+const touchThreshold = 16;
+const touchStep = 0.25; // Lower sensitivity for touch
+let lastTouchedCover = null;
+let touchHoverTimeout = null;
+
+const clearTouchHover = () => {
+  if (lastTouchedCover) {
+    lastTouchedCover.classList.remove('touch-hover');
+    lastTouchedCover = null;
+  }
+  if (touchHoverTimeout) {
+    clearTimeout(touchHoverTimeout);
+    touchHoverTimeout = null;
+  }
+};
+
+const setTouchHover = (cover) => {
+  clearTouchHover();
+  cover.classList.add('touch-hover');
+  lastTouchedCover = cover;
+  touchHoverTimeout = setTimeout(clearTouchHover, 3000);
+};
 
 if (supportsTouch) {
   document.body.classList.add('touch-device');
@@ -79,23 +101,35 @@ window.addEventListener('touchmove', (event) => {
   if (Math.abs(deltaY) < 2) return;
   touchMoved = true;
   touchCurrentY = touchY;
+  touchAccumulated += deltaY;
+
+  // Prevent tiny micro-movements from triggering scroll changes
+  if (Math.abs(touchAccumulated) < touchThreshold) return;
+
   event.preventDefault();
   vinylCollection.classList.add('scrolling');
-  const direction = deltaY > 0 ? 1 : -1;
-  activeIndex = clamp(activeIndex + direction * scrollStep, 0, vinylContainers.length - 1);
+
+  // Reverse the direction so swipe up moves collection forward
+  const direction = touchAccumulated > 0 ? -1 : 1;
+  activeIndex = clamp(activeIndex + direction * touchStep, 0, vinylContainers.length - 1);
   updateCollectionTransform();
+
+  // Keep remaining motion for smoother interaction
+  touchAccumulated = touchAccumulated > 0 ? touchAccumulated - touchThreshold : touchAccumulated + touchThreshold;
 }, { passive: false });
 
 window.addEventListener('touchend', () => {
   touchStartY = null;
   touchCurrentY = null;
   touchMoved = false;
+  touchAccumulated = 0;
 });
 
 window.addEventListener('touchcancel', () => {
   touchStartY = null;
   touchCurrentY = null;
   touchMoved = false;
+  touchAccumulated = 0;
 });
 
 // Auto-scroll animation on page load
@@ -281,14 +315,34 @@ vinylCovers.forEach((cover) => {
   cover.addEventListener('touchend', (event) => {
     if (touchStartY === null) return;
     const touchEndY = event.changedTouches[0].clientY;
-    if (Math.abs(touchEndY - touchStartY) > touchThreshold) return;
+    if (Math.abs(touchEndY - touchStartY) > touchThreshold) {
+      touchStartY = null;
+      return;
+    }
+
     const vinyl = cover.querySelector('.vinyl');
     const targetUrl = vinyl?.dataset.projectUrl;
-    if (targetUrl && !isNavigating) {
-      window.location.href = targetUrl;
+    if (!targetUrl || isNavigating) {
+      touchStartY = null;
+      return;
     }
+
+    if (cover.classList.contains('touch-hover')) {
+      clearTouchHover();
+      window.location.href = targetUrl;
+    } else {
+      setTouchHover(cover);
+    }
+    touchStartY = null;
   });
 });
+
+document.addEventListener('touchstart', (event) => {
+  if (!lastTouchedCover) return;
+  if (!lastTouchedCover.contains(event.target)) {
+    clearTouchHover();
+  }
+}, { passive: true });
 
 vinyls.forEach((vinyl) => {
   vinyl.addEventListener('click', () => {

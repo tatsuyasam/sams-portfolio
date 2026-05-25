@@ -339,6 +339,32 @@ body.touch-device .vinyl-container:hover .vinyl {
     left: 3%;
 }
 
+body.touch-device .vinyl-cover.touch-hover {
+    transform: skewY(5deg) scale(1.04);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 18px 45px rgba(0, 0, 0, 0.35);
+}
+
+body.touch-device .vinyl-cover.touch-hover .vinyl {
+    transform: translate(0, 0) scale(1.05);
+}
+
+body.touch-device .vinyl-cover.touch-hover::after {
+    content: 'Tap again to open';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 12px;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: linear-gradient(0deg, rgba(0,0,0,0.4), transparent 50%);
+    border-radius: 16px;
+    pointer-events: none;
+}
+
 .text-box {
     position: absolute;
     top: 250px;
