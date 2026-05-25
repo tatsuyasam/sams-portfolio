@@ -453,3 +453,8 @@ vinyls.forEach((vinyl) => {
     }, { once: true });
   });
 });
+
+window.addEventListener("popstate", (event) => {
+    // Refresh the page instead of going back
+    location.reload();
+});
