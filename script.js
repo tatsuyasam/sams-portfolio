@@ -255,6 +255,9 @@ const headerIcon = document.getElementById('header-icon');
 const textBox = document.getElementById('text-box');
 const aboutMeText = document.getElementById('about-me-text');
 const contactOptions = document.getElementById('contact-options');
+const emailbutton = document.getElementById('email-button');
+const linkedinButton = document.getElementById('linkedin-button');
+const instaButton = document.getElementById('insta-button');
 
 // Set the "SAM'S PORTFOLIO" button as initially active
 portfolioButton.classList.add('active')
@@ -301,6 +304,49 @@ if (award1Button) {
 if (award2Button) {
   award2Button.addEventListener('click', () => {
     window.open('https://seedaward.sg/dbcs-seed-award-winners/2025/', '_blank');
+  });
+}
+
+const copyToClipboard = async (text) => {
+  try {
+    await navigator.clipboard.writeText(text);
+    return true;
+  } catch (err) {
+    console.error('Clipboard copy failed:', err);
+    return false;
+  }
+};
+
+if (emailbutton) {
+  emailbutton.addEventListener('click', async () => {
+    const success = await copyToClipboard('samtzk2006@gmail.com');
+    if (!success) return;
+    const originalText = emailbutton.textContent;
+    emailbutton.textContent = 'Email Copied!';
+    clearTimeout(emailbutton._timeout);
+    emailbutton._timeout = setTimeout(() => {
+      emailbutton.textContent = originalText;
+    }, 2000);
+  });
+}
+
+if (linkedinButton) {
+  linkedinButton.addEventListener('click', () => {
+    window.open(
+      'https://www.linkedin.com/in/sam-tan-tatsuya/',
+      '_blank',
+      'noopener,noreferrer'
+    );
+  });
+}
+
+if (instaButton) {
+  instaButton.addEventListener('click', () => {
+    window.open(
+      'https://www.instagram.com/sam_arch.exe/',
+      '_blank',
+      'noopener,noreferrer'
+    );
   });
 }
 
@@ -454,6 +500,10 @@ vinyls.forEach((vinyl) => {
     }, { once: true });
   });
 });
+
+
+
+
 
 // Add fake history state
 history.pushState(null, null, location.href);
