@@ -632,6 +632,11 @@ body.touch-device .vinyl-cover.touch-hover::after {
         transform: none;
     }
 
+        .vinyl-animate .vinyl-image {
+        width: 80px;
+        height: 80px;
+    }
+
     .contact-options {
         display: flex;
         flex-direction: column;
