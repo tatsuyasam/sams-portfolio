@@ -542,6 +542,13 @@ const isReload = navEntry && navEntry.type === "reload";
 
 document.body.classList.add('loading');
 
+
+const video = document.getElementById('loader-video');
+
+video.addEventListener('loadedmetadata', () => {
+  video.playbackRate = 1.11;
+});
+
 window.addEventListener('load', () => {
 
   const loader = document.getElementById('loader');
