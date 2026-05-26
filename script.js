@@ -499,35 +499,38 @@ vinyls.forEach((vinyl) => {
 
 
 
-// Add fake history state
 history.pushState(null, null, location.href);
 
-// Intercept back button
+// Desktop + basic back button handling
 window.addEventListener("popstate", () => {
-    history.pushState(null, null, location.href);
+  history.pushState(null, null, location.href);
 });
 
+function resetPageState() {
+  document.body.classList.remove('transitioning', 'dark-grey-background');
 
-window.addEventListener("pageshow", (event) => {
+  document.querySelectorAll('.vinyl-animate').forEach(el => el.remove());
 
-    if (!sessionStorage.getItem("navigating")) return;
+  document.querySelectorAll('.vinyl').forEach(vinyl => {
+    vinyl.style.visibility = 'visible';
+  });
 
-    sessionStorage.removeItem("navigating");
+  isNavigating = false;
 
-    document.body.classList.remove('transitioning');
-    document.body.classList.remove('dark-grey-background');
-
-    document.querySelectorAll('.vinyl-animate').forEach(el => {
-        el.remove();
-    });
-
-    document.querySelectorAll('.vinyl').forEach(vinyl => {
-        vinyl.style.visibility = 'visible';
-    });
-
-    isNavigating = false;
-
+  if (typeof updateCollectionTransform === "function") {
     updateCollectionTransform();
+  }
 
-    document.body.offsetHeight;
+  document.body.offsetHeight;
+}
+
+// Mobile + Safari + GitHub Pages fix
+window.addEventListener("pageshow", (event) => {
+  const isBackForward =
+    event.persisted ||
+    performance.getEntriesByType("navigation")[0]?.type === "back_forward";
+
+  if (isBackForward) {
+    resetPageState();
+  }
 });
