@@ -537,32 +537,40 @@ window.addEventListener("pageshow", (event) => {
   }
 });
 
-const navEntry = performance.getEntriesByType("navigation")[0];
-const isReload = navEntry && navEntry.type === "reload";
-
 document.body.classList.add('loading');
-
-
 const video = document.getElementById('loader-video');
 
 video.addEventListener('loadedmetadata', () => {
   video.playbackRate = 1.11;
 });
 
-window.addEventListener('load', () => {
+const navEntry = performance.getEntriesByType("navigation")[0];
+const isReload = navEntry && navEntry.type === "reload";
+
+// 👇 IMPORTANT: detects back/forward cache restore
+window.addEventListener("pageshow", (event) => {
+
+  const isBackForward =
+    event.persisted ||
+    performance.getEntriesByType("navigation")[0]?.type === "back_forward";
+
+  // 🔄 BACK BUTTON / RETURN → DO NOT SHOW LOADER
+  if (isBackForward || isReload) {
+    const loader = document.getElementById('loader');
+    if (loader) loader.remove();
+
+    document.body.classList.remove('loading');
+    autoScrollVinyls();
+
+    return;
+  }
+
+  // 🆕 NORMAL FIRST LOAD ONLY → SHOW LOADER
+  document.body.classList.add('loading');
 
   const loader = document.getElementById('loader');
   const percentText = document.getElementById('loader-percent');
 
-  // 🔄 RELOAD → skip loader completely
-  if (isReload) {
-    if (loader) loader.remove();
-    document.body.classList.remove('loading');
-    autoScrollVinyls();
-    return;
-  }
-
-  // 🆕 FIRST LOAD / NEW TAB → show loader animation
   let progress = 0;
 
   const interval = setInterval(() => {
@@ -585,5 +593,4 @@ window.addEventListener('load', () => {
       autoScrollVinyls();
     }
   }, 20);
-
 });
