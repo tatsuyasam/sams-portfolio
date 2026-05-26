@@ -223,8 +223,8 @@ body.dark-grey-background::before {
 
 .vinyl-animate .vinyl-image {
     position: absolute;
-    width: 90px;
-    height: 90px;
+    width: 135px;
+    height: 135px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -298,8 +298,8 @@ body.transitioning .vinyl:not(.fly-right) {
 
 .vinyl .vinyl-image {
     position: absolute;
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

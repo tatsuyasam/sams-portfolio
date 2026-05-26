@@ -368,7 +368,7 @@ a {
   --vinyl-size: 400px; /* slightly larger */
   position: fixed;
   right: -30px; /* base right offset */
-  top: 8.5%; /* moved up from center */
+  top: 50%; /* moved up from center */
   width: var(--vinyl-size);
   height: var(--vinyl-size);
   /* translateX(40%) pushes 40% of the vinyl's width off-screen to the right */
