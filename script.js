@@ -3,6 +3,8 @@ const vinylContainers = Array.from(document.querySelectorAll('.vinyl-container')
 const vinylCovers = Array.from(document.querySelectorAll('.vinyl-cover'));
 const vinyls = Array.from(document.querySelectorAll('.vinyl'));
 
+document.body.classList.add('loading');
+
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
 // Calculate responsive spacing based on viewport size and aspect ratio
@@ -218,7 +220,7 @@ const autoScrollVinyls = () => {
 };
 
 // Start auto-scroll immediately with entrance animation
-autoScrollVinyls();
+// autoScrollVinyls();
 
 // Handle window resize to recalculate spacing
 window.addEventListener('resize', () => {
@@ -534,3 +536,48 @@ window.addEventListener("pageshow", (event) => {
     resetPageState();
   }
 });
+
+const hasVisited = sessionStorage.getItem('hasVisited');
+
+if (!hasVisited) {
+
+  document.body.classList.add('loading');
+
+  window.addEventListener('load', () => {
+
+    const loader = document.getElementById('loader');
+
+    setTimeout(() => {
+
+      loader.classList.add('hidden');
+
+      document.body.classList.remove('loading');
+
+      sessionStorage.setItem('hasVisited', 'true');
+
+      setTimeout(() => {
+        loader.remove();
+      }, 1000);
+
+      autoScrollVinyls();
+
+    }, 1000);
+
+  });
+
+} else {
+
+  // remove loader instantly on repeat visits
+  const loader = document.getElementById('loader');
+
+  if (loader) {
+    loader.remove();
+  }
+
+  document.body.classList.remove('loading');
+
+  // start animation immediately
+  window.addEventListener('load', () => {
+    autoScrollVinyls();
+  });
+}
