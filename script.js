@@ -537,58 +537,44 @@ window.addEventListener("pageshow", (event) => {
   }
 });
 
-const hasVisited = sessionStorage.getItem('hasVisited');
+const navEntry = performance.getEntriesByType("navigation")[0];
+const isReload = navEntry && navEntry.type === "reload";
 
-if (!hasVisited) {
+document.body.classList.add('loading');
 
-  document.body.classList.add('loading');
+window.addEventListener('load', () => {
+  const loader = document.getElementById('loader');
 
-  window.addEventListener('load', () => {
+  // ❌ If it's a reload → skip loader
+  if (isReload) {
+    loader.remove();
+    document.body.classList.remove('loading');
+    autoScrollVinyls();
+    return;
+  }
 
-    const loader = document.getElementById('loader');
-
+  // ✅ If it's new tab / fresh open → show loader
   const percentText = document.getElementById('loader-percent');
-    
   let progress = 0;
-    
+
   const interval = setInterval(() => {
     progress++;
-  
+
     if (percentText) {
       percentText.textContent = `${progress}%`;
     }
-  
+
     if (progress >= 100) {
       clearInterval(interval);
-    
+
       loader.classList.add('hidden');
       document.body.classList.remove('loading');
-    
-      sessionStorage.setItem('hasVisited', 'true');
-    
+
       setTimeout(() => {
         loader.remove();
       }, 1000);
-    
+
       autoScrollVinyls();
     }
-  }, 20); // speed control (20ms = ~2s total)
-
+  }, 20);
 });
-
-} else {
-
-  // remove loader instantly on repeat visits
-  const loader = document.getElementById('loader');
-
-  if (loader) {
-    loader.remove();
-  }
-
-  document.body.classList.remove('loading');
-
-  // start animation immediately
-  window.addEventListener('load', () => {
-    autoScrollVinyls();
-  });
-}
