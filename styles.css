@@ -33,6 +33,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+    pointer-events: none;
 }
 
 .header-button {
@@ -49,6 +50,7 @@ header {
     margin-right: 5px; /* Add spacing between buttons */
     margin-bottom: 5px;
     border-radius: 5px; /* Curve the corners */
+    pointer-events: auto;
 }
 
 .header-button.active {
@@ -73,7 +75,8 @@ header {
     background-color:  rgba(0, 0, 0, 0.486);
     border-radius: 10px;
     object-fit: cover;
-    filter: brightness(250%)
+    filter: brightness(250%);
+    pointer-events: auto;
 }
 
 .header-icon.animate {
@@ -148,7 +151,7 @@ body.dark-grey-background::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.9;
+    opacity: 0.95;
     transform: skewY(5deg);
 }
 
@@ -200,8 +203,8 @@ body.dark-grey-background::before {
     justify-content: center;
     background: repeating-radial-gradient(
         circle at center,
-        #2a2a2a 0px,
-        #2a2a2a 3px,
+        #3b3b3b 0px,
+        #3b3b3b 3px,
         #0a0a0a 3px,
         #0a0a0a 5px
     );
@@ -272,8 +275,8 @@ body.transitioning .vinyl:not(.fly-right) {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 90px; /* Adjust the size of the hole */
-    height: 90px; /* Adjust the size of the hole */
+    width: 10px; /* Adjust the size of the hole */
+    height: 10px; /* Adjust the size of the hole */
     background-color: #000;  /* Background color for the hole */
     border-radius: 50%; /* Ensure the hole is fully circular */
     z-index: 1; /* Ensure the hole stays above the vinyl */
@@ -286,7 +289,7 @@ body.transitioning .vinyl:not(.fly-right) {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.9;
+    opacity: .95;
     border-radius: 16px;
     cursor: pointer;
 }
@@ -418,23 +421,29 @@ body.touch-device .vinyl-cover.touch-hover::after {
     margin: 0;
     padding: 0;
     font-size: 11px;
+    line-height: 1.5;
     color: #fff;
 }
 
 .award1-button, .award2-button {
-    background-color: #272727;
-    color: #ffffffbb;
-    border: 1px solid #a8a8a8;
+    background-color: transparent;
+    color: #fff;
+    border: none;
     font-size: 11px;
-    padding: 8px 12px;
-    margin: 4px 0;
+    padding: 0;
+    margin: 0;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 0;
+    font-family: inherit;
+    display: inline;
+    text-decoration: underline #ffffffe0 1px;
+    transition: opacity 0.3s ease;
+    pointer-events: auto;
+    line-height: 1.5; 
 }
 
 .award1-button:hover, .award2-button:hover {
-    border-color: #fff;
-    color: #fff;
+    opacity: 0.7;
 }
 
 .about-me-text.visible {
@@ -582,7 +591,7 @@ body.touch-device .vinyl-cover.touch-hover::after {
         display: flex;
         align-items: center;
         justify-content: center;
-        opacity: 0.9;
+        opacity: 0.95;
         transform: skewY(5deg);
     }
 

@@ -296,14 +296,15 @@ contactButton.addEventListener('click', () => {
     resetView();
     if (contactOptions) contactOptions.style.display = 'flex';
 });
+
 if (award1Button) {
   award1Button.addEventListener('click', () => {
-    window.open('https://www.worldskills.sg/skills/all-champions/-/-/digital-construction/gold-award/', '_blank');
+    window.open('https://www.worldskills.sg/skills/all-champions/-/-/digital-construction/gold-award/','_blank','noopener,noreferrer');
   });
 }
 if (award2Button) {
   award2Button.addEventListener('click', () => {
-    window.open('https://seedaward.sg/dbcs-seed-award-winners/2025/', '_blank');
+    window.open('https://seedaward.sg/dbcs-seed-award-winners/2025/','_blank','noopener,noreferrer');
   });
 }
 
@@ -332,21 +333,14 @@ if (emailbutton) {
 
 if (linkedinButton) {
   linkedinButton.addEventListener('click', () => {
-    window.open(
-      'https://www.linkedin.com/in/sam-tan-tatsuya/',
-      '_blank',
-      'noopener,noreferrer'
-    );
+    window.open('https://www.linkedin.com/in/sam-tan-tatsuya/','_blank','noopener,noreferrer');
   });
 }
 
 if (instaButton) {
   instaButton.addEventListener('click', () => {
     window.open(
-      'https://www.instagram.com/sam_arch.exe/',
-      '_blank',
-      'noopener,noreferrer'
-    );
+      'https://www.instagram.com/sam_arch.exe/','_blank','noopener,noreferrer');
   });
 }
 
