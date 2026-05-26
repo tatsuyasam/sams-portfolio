@@ -547,23 +547,34 @@ if (!hasVisited) {
 
     const loader = document.getElementById('loader');
 
-    setTimeout(() => {
-
+  const percentText = document.getElementById('loader-percent');
+    
+  let progress = 0;
+    
+  const interval = setInterval(() => {
+    progress++;
+  
+    if (percentText) {
+      percentText.textContent = `${progress}%`;
+    }
+  
+    if (progress >= 100) {
+      clearInterval(interval);
+    
       loader.classList.add('hidden');
-
       document.body.classList.remove('loading');
-
+    
       sessionStorage.setItem('hasVisited', 'true');
-
+    
       setTimeout(() => {
         loader.remove();
       }, 1000);
-
+    
       autoScrollVinyls();
+    }
+  }, 20); // speed control (20ms = ~2s total)
 
-    }, 1000);
-
-  });
+});
 
 } else {
 
