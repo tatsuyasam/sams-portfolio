@@ -64,7 +64,7 @@
     if(match){
       const id = match[1];
       // project pages live in /projects/, vinyl assets are at root one level up
-      vinylSrc = `../${id}_Vinyl.jpg`;
+      vinylSrc = `../${id}_Vinyl.png`;
     }
 
     // fallback to hero image if project-specific vinyl isn't available (onerror will handle it)

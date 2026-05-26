@@ -153,14 +153,16 @@ body.dark-grey-background::before {
     justify-content: center;
     opacity: 0.95;
     transform: skewY(5deg);
+    border:rgb(37, 37, 37) solid 2px;
+    border-radius: 16px;
 }
 
 .vinyl {
     position: absolute;
     top: 0;
     left: 0;
-    width: 320px;
-    height: 320px;
+    width: 315px;
+    height: 315px;
     background: repeating-radial-gradient(
         circle at center,
         #202020 0px,
