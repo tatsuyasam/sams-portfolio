@@ -543,18 +543,19 @@ const isReload = navEntry && navEntry.type === "reload";
 document.body.classList.add('loading');
 
 window.addEventListener('load', () => {
-  const loader = document.getElementById('loader');
 
-  // ❌ If it's a reload → skip loader
+  const loader = document.getElementById('loader');
+  const percentText = document.getElementById('loader-percent');
+
+  // 🔄 RELOAD → skip loader completely
   if (isReload) {
-    loader.remove();
+    if (loader) loader.remove();
     document.body.classList.remove('loading');
     autoScrollVinyls();
     return;
   }
 
-  // ✅ If it's new tab / fresh open → show loader
-  const percentText = document.getElementById('loader-percent');
+  // 🆕 FIRST LOAD / NEW TAB → show loader animation
   let progress = 0;
 
   const interval = setInterval(() => {
@@ -577,4 +578,5 @@ window.addEventListener('load', () => {
       autoScrollVinyls();
     }
   }, 20);
+
 });
