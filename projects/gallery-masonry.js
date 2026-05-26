@@ -96,4 +96,11 @@
 
   window.addEventListener('load', initVinyl);
   window.addEventListener('resize', initVinyl);
+
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+      document.body.classList.add('page-loaded');
+    });
+  });
+
 })();

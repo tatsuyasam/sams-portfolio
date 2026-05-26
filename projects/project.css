@@ -11,6 +11,13 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  opacity: 0;
+  transition:
+    opacity 0.8s ease,
+}
+
+body.page-loaded {
+  opacity: 1;
 }
 
 a {
