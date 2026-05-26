@@ -537,60 +537,64 @@ window.addEventListener("pageshow", (event) => {
   }
 });
 
-document.body.classList.add('loading');
+
+const isReturningFromProject =
+  sessionStorage.getItem('returningToHome') === 'true';
+
+sessionStorage.removeItem('returningToHome');
+
 const video = document.getElementById('loader-video');
 
-video.addEventListener('loadedmetadata', () => {
-  video.playbackRate = 1.11;
-});
+if (video) {
+  video.addEventListener('loadedmetadata', () => {
+    video.playbackRate = 1.11;
+  });
+}
 
 const navEntry = performance.getEntriesByType("navigation")[0];
-const isReload = navEntry && navEntry.type === "reload";
 
-// 👇 IMPORTANT: detects back/forward cache restore
-window.addEventListener("pageshow", (event) => {
+const isReload = navEntry?.type === "reload";
+const isBackForward = navEntry?.type === "back_forward";
 
-  const isBackForward =
-    event.persisted ||
-    performance.getEntriesByType("navigation")[0]?.type === "back_forward";
+// ❌ SKIP LOADER CONDITIONS
+const skipLoader =
+  isReload || isBackForward || isReturningFromProject;
 
-  // 🔄 BACK BUTTON / RETURN → DO NOT SHOW LOADER
-  if (isBackForward || isReload) {
-    const loader = document.getElementById('loader');
-    if (loader) loader.remove();
+const loader = document.getElementById('loader');
+const percentText = document.getElementById('loader-percent');
 
-    document.body.classList.remove('loading');
-    autoScrollVinyls();
+if (skipLoader) {
+  if (loader) loader.remove();
+  document.body.classList.remove('loading');
+  autoScrollVinyls();
+} else {
 
-    return;
-  }
-
-  // 🆕 NORMAL FIRST LOAD ONLY → SHOW LOADER
   document.body.classList.add('loading');
 
-  const loader = document.getElementById('loader');
-  const percentText = document.getElementById('loader-percent');
+  window.addEventListener('load', () => {
 
-  let progress = 0;
+    let progress = 0;
 
-  const interval = setInterval(() => {
-    progress++;
+    const interval = setInterval(() => {
+      progress++;
 
-    if (percentText) {
-      percentText.textContent = `${progress}%`;
-    }
+      if (percentText) {
+        percentText.textContent = `${progress}%`;
+      }
 
-    if (progress >= 100) {
-      clearInterval(interval);
+      if (progress >= 100) {
+        clearInterval(interval);
 
-      loader.classList.add('hidden');
-      document.body.classList.remove('loading');
+        loader.classList.add('hidden');
+        document.body.classList.remove('loading');
 
-      setTimeout(() => {
-        loader.remove();
-      }, 1000);
+        setTimeout(() => {
+          loader.remove();
+        }, 1000);
 
-      autoScrollVinyls();
-    }
-  }, 20);
-});
+        autoScrollVinyls();
+      }
+    }, 20);
+
+  });
+}

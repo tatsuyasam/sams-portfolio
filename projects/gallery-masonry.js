@@ -104,3 +104,12 @@
   });
 
 })();
+
+
+const returnBtn = document.querySelector('.back-btn');
+
+if (returnBtn) {
+  returnBtn.addEventListener('click', () => {
+    sessionStorage.setItem('returningToHome', 'true');
+  });
+}
