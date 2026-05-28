@@ -268,10 +268,6 @@ a {
   transition: transform 0.3s ease;
 }
 
-.feature-image:hover img {
-  transform: scale(1.02);
-}
-
 .gallery-section {
   margin-bottom: 40px;
 }
@@ -308,10 +304,6 @@ a {
   display: block;
   object-fit: cover;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.gallery-item:hover img {
-  transform: scale(1.05);
 }
 
 .project-metadata {
