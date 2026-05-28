@@ -268,6 +268,87 @@ a {
   transition: transform 0.3s ease;
 }
 
+.project-video-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 44px 0 52px;
+}
+
+.project-video-slot .video-slot-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-video-slot .video-slot-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.project-video-slot .video-frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03)),
+    radial-gradient(circle at center, rgba(255,255,255,0.10), rgba(255,255,255,0.03)),
+    #070707;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+.project-video-slot .video-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.06) 0, rgba(255,255,255,0) 25%, rgba(255,255,255,0) 75%, rgba(255,255,255,0.06) 100%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 30px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.project-video-slot .video-placeholder {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  color: rgba(255,255,255,0.72);
+}
+
+.project-video-slot .video-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+  color: #fff;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.project-video-slot .video-placeholder p {
+  margin: 0;
+  max-width: 540px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
 .gallery-section {
   margin-bottom: 40px;
 }

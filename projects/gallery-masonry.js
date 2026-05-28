@@ -41,7 +41,21 @@
   let loaderInterval = null;
   let loaderProgress = 0;
 
-  const overlayLoader = document.getElementById('project-page-loader');
+  async function waitForHeroImage() {
+    const heroImg = document.querySelector('.hero-image img');
+
+    if (!heroImg) return;
+
+    if (typeof heroImg.decode === 'function') {
+      try {
+        await heroImg.decode();
+      } catch (error) {
+        // Ignore decode failures and continue with the page load.
+      }
+    }
+
+    await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+  }
 
   function getProjectVinylSource() {
     const match = location.pathname.match(/(\d{2})/);
@@ -131,7 +145,9 @@
       }
     }, 20);
 
-    window.addEventListener('load', finishProjectLoader, { once: true });
+    waitForHeroImage().then(() => {
+      finishProjectLoader();
+    });
   }
 
   if (isBackForward || isReturningFromHome) {
