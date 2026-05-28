@@ -34,6 +34,124 @@
     }
   }
 
+  const navEntry = performance.getEntriesByType('navigation')[0];
+  const isBackForward = navEntry?.type === 'back_forward';
+  const isReturningFromHome = sessionStorage.getItem('returningToHome') === 'true';
+
+  let loaderInterval = null;
+  let loaderProgress = 0;
+
+  const overlayLoader = document.getElementById('project-page-loader');
+
+  function getProjectVinylSource() {
+    const match = location.pathname.match(/(\d{2})/);
+    if (match) {
+      const id = match[1];
+      return `../${id}_Vinyl.png`;
+    }
+
+    const heroImg = document.querySelector('.hero-image img');
+    return heroImg?.getAttribute('src') || '';
+  }
+
+  function createProjectLoader() {
+    if (document.getElementById('project-page-loader')) return;
+
+    const loader = document.createElement('div');
+    loader.id = 'project-page-loader';
+
+    const vinylSource = getProjectVinylSource();
+    const heroImg = document.querySelector('.hero-image img');
+
+    loader.innerHTML = `
+      <div class="project-loader-shell">
+        <div class="project-loader-vinyl" aria-hidden="true">
+          <img class="vinyl-image" src="${vinylSource}" alt="Loading vinyl record">
+        </div>
+        <div id="project-loader-percent">0%</div>
+      </div>
+    `;
+
+    const loaderImage = loader.querySelector('.vinyl-image');
+    if (loaderImage && heroImg) {
+      loaderImage.onerror = () => {
+        loaderImage.src = heroImg.getAttribute('src') || '';
+      };
+    }
+
+    document.body.appendChild(loader);
+    return loader;
+  }
+
+  function removeProjectLoader() {
+    const loader = document.getElementById('project-page-loader');
+    if (!loader) return;
+
+    loader.classList.add('hidden');
+    window.setTimeout(() => {
+      loader.remove();
+    }, 1000);
+  }
+
+  function finishProjectLoader() {
+    const loader = document.getElementById('project-page-loader');
+    const percentText = document.getElementById('project-loader-percent');
+
+    if (loaderInterval) {
+      clearInterval(loaderInterval);
+      loaderInterval = null;
+    }
+
+    loaderProgress = 100;
+    if (percentText) {
+      percentText.textContent = '100%';
+    }
+
+    document.body.classList.remove('loading');
+    removeProjectLoader();
+  }
+
+  function startProjectLoader() {
+    createProjectLoader();
+    document.body.classList.add('loading');
+
+    const loader = document.getElementById('project-page-loader');
+    const percentText = document.getElementById('project-loader-percent');
+
+    loaderProgress = 0;
+    if (percentText) {
+      percentText.textContent = '0%';
+    }
+
+    loaderInterval = setInterval(() => {
+      loaderProgress = Math.min(loaderProgress + 1, 98);
+
+      if (percentText) {
+        percentText.textContent = `${loaderProgress}%`;
+      }
+    }, 20);
+
+    window.addEventListener('load', finishProjectLoader, { once: true });
+  }
+
+  if (isBackForward || isReturningFromHome) {
+    sessionStorage.removeItem('returningToHome');
+    document.body.classList.remove('loading');
+    removeProjectLoader();
+  } else {
+    startProjectLoader();
+  }
+
+  window.addEventListener('pageshow', (event) => {
+    const persisted = event.persisted;
+    const currentNavEntry = performance.getEntriesByType('navigation')[0];
+    const persistedBackForward = currentNavEntry?.type === 'back_forward';
+
+    if (persisted || persistedBackForward) {
+      finishProjectLoader();
+    }
+  });
+
   /* Inject a spinning vinyl on project pages using the hero image */
   function initVinyl(){
     if(!document.querySelector('.project-page')) return;
