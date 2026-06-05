@@ -185,11 +185,6 @@
     img.className = 'vinyl-image';
     vinyl.appendChild(img);
 
-    // create tonearm element and append to body so it does NOT inherit vinyl transforms
-    const tonearm = document.createElement('div');
-    tonearm.className = 'project-tonearm';
-    document.body.appendChild(tonearm);
-
     document.body.appendChild(vinyl);
 
     // Derive project id (e.g. "01") from filename and prefer project vinly asset
@@ -207,9 +202,6 @@
 
     // set size larger by default; can be tweaked per-project by changing the variable
     vinyl.style.setProperty('--vinyl-size', '400px');
-
-    // show the tonearm with a simple load animation
-    requestAnimationFrame(() => tonearm.classList.add('tonearm-show'));
 
     let rafId = null;
     function updateRotation(){

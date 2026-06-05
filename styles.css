@@ -477,7 +477,9 @@ body.touch-device .vinyl-cover.touch-hover::after {
     color: #ffffff9d;
 }
 
-.about-me-text p1,p2,p3 {
+.about-me-text .positions-list,
+.about-me-text .positions-years,
+.about-me-text .recognition-list {
     margin: 0;
     padding: 0;
     font-size: 11px;
@@ -485,7 +487,7 @@ body.touch-device .vinyl-cover.touch-hover::after {
     color: #fff;
 }
 
-.about-me-text p3 {
+.about-me-text .positions-years {
     color: #ffffffb3;
     font-size: 10px;
     text-align: right;
@@ -796,14 +798,14 @@ body.touch-device .vinyl-cover.touch-hover::after {
         text-align: left;
     }
 
-    .about-me-text p1,
-    .about-me-text p2,
-    .about-me-text p3 {
+    .about-me-text .positions-list,
+    .about-me-text .positions-years,
+    .about-me-text .recognition-list {
         font-size: 9px;
         text-align: left;
     }
 
-    .about-me-text p3 {
+    .about-me-text .positions-years {
         font-size: 9px;
         text-align: left;
     }
