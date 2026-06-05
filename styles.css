@@ -491,6 +491,15 @@ body.touch-device .vinyl-cover.touch-hover::after {
     text-align: right;
 }
 
+ .info-row-2 {
+    display: grid;
+    grid-template-columns: minmax(0, 160px) minmax(0, 520px);
+    gap: 10px;
+    align-items: start;
+    margin-bottom: 12px;
+}
+
+
 .award1-button, .award2-button {
     background-color: transparent;
     color: #fff;
@@ -735,7 +744,7 @@ body.touch-device .vinyl-cover.touch-hover::after {
         left: auto;
         transform: none;
         margin: 8px auto;
-        margin-top: 120px;
+        margin-top: 70%;
         width: fit-content;
         max-width: 90%;
     }
@@ -765,33 +774,47 @@ body.touch-device .vinyl-cover.touch-hover::after {
     }
 
     .about-me-text {
-        position: relative;
+        position: absolute;
         top: auto;
         left: auto;
         right: auto;
+        text-align: left;
         max-width: none;
         padding: 0 8px 8px;
         margin-top: 40px;
-        font-size: 10px;
+        font-size: 9px;
     }
 
     .about-me-text .info-row {
-        grid-template-columns: 1fr;
-        gap: 6px;
+        text-align: left;
+        grid-template-columns: minmax(0, 80px) minmax(0, 150px) minmax(0, 80px);
     }
 
     .about-me-text h1,
     .about-me-text h2 {
-        font-size: 10px;
+        font-size: 9px;
+        text-align: left;
     }
 
     .about-me-text p1,
     .about-me-text p2,
     .about-me-text p3 {
-        font-size: 10px;
+        font-size: 9px;
+        text-align: left;
     }
 
     .about-me-text p3 {
+        font-size: 9px;
         text-align: left;
+    }
+
+    .award1-button, .award2-button {
+        font-size: 9px;
+        text-align: left;
+        line-height: 1.5;
+    }
+
+    .info-row-2 {
+        grid-template-columns: minmax(0, 80px) minmax(0, 300px);
     }
 }
