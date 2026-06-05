@@ -111,6 +111,21 @@ header {
     color: #fff;
 }
 
+.header-button:focus-visible,
+.header-icon:focus-visible,
+.filter-button:focus-visible,
+.email-button:focus-visible,
+.linkedin-button:focus-visible,
+.insta-button:focus-visible,
+.award1-button:focus-visible,
+.award2-button:focus-visible,
+.award3-button:focus-visible,
+.vinyl:focus-visible,
+.vinyl-cover:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
 .header-icon {
     margin-left: auto; /* Push the icon to the right */
     width: 100px;
@@ -131,6 +146,43 @@ header {
     transition: width 0.5s, height 0.5s; /* Smooth transition for size change */
     width: 500px; /* Increased width */
     height: 500px; /* Increased height */
+}
+
+.project-filter {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    z-index: 80;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: min(560px, calc(100vw - 20px));
+    pointer-events: auto;
+}
+
+.filter-button {
+    background-color: rgba(39, 39, 39, 0.88);
+    color: #ffffffa8;
+    border: 1px solid #a8a8a8;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font: inherit;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.filter-button:hover,
+.filter-button.active {
+    border-color: #fff;
+    color: #fff;
+    background-color: rgba(64, 64, 64, 0.92);
+}
+
+body.dark-grey-background .project-filter {
+    opacity: 0;
+    pointer-events: none;
 }
 
 body.dark-grey-background {
@@ -274,6 +326,10 @@ body.dark-grey-background::before {
     animation: vinylSpinSlow 1.5s linear forwards;
 }
 
+.vinyl-animate.spin-continuous {
+    animation: vinylSpinContinuous 0.9s linear infinite;
+}
+
 .vinyl-animate .vinyl-image {
     position: absolute;
     width: 135px;
@@ -324,6 +380,15 @@ body.transitioning .vinyl:not(.fly-right) {
     }
 }
 
+@keyframes vinylSpinContinuous {
+    0% {
+        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.2) rotate(0deg);
+    }
+    100% {
+        transform: translate(var(--vinyl-translate-x), var(--vinyl-translate-y)) scale(1.2) rotate(360deg);
+    }
+}
+
 .vinyl::before {
     content: '';
     position: absolute;
@@ -366,6 +431,10 @@ body.transitioning .vinyl:not(.fly-right) {
 .vinyl.hidden, .vinyl-cover.hidden, .vinyl-container.hidden {
     display: none; /* Hide elements */
     opacity: 0.1;
+}
+
+.vinyl-container.filter-hidden {
+    display: none;
 }
 
 /* Hover effect to slide the vinyl fully out of the cover */
@@ -644,6 +713,10 @@ body.touch-device .vinyl-cover.touch-hover::after {
         display: none;
     }
 
+    .project-filter {
+        display: none;
+    }
+
     .vinyl-collection {
         position: fixed;
         top: 32%;
@@ -818,5 +891,21 @@ body.touch-device .vinyl-cover.touch-hover::after {
 
     .info-row-2 {
         grid-template-columns: minmax(0, 80px) minmax(0, 300px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+    }
+
+    .vinyl-container:hover .vinyl,
+    body.touch-device .vinyl-cover.touch-hover .vinyl {
+        left: 3%;
     }
 }

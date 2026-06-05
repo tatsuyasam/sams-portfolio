@@ -166,6 +166,14 @@ a {
   margin-left: 12px;
 }
 
+.project-index {
+  margin-left: auto;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
 .mobile-project-nav {
   display: none;
 }
@@ -192,6 +200,16 @@ a {
   border-color: rgba(255, 255, 255, 0.46);
   color: #fff;
   outline: none;
+}
+
+.back-btn:focus-visible,
+.mobile-project-nav-btn:focus-visible,
+.project-nav-vinyl:focus-visible,
+.gallery-item img:focus-visible,
+.feature-image img:focus-visible,
+.lightbox-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
 }
 
 .project-page {
@@ -293,6 +311,7 @@ a {
   aspect-ratio: 4 / 3;
   object-fit: cover;
   transition: transform 0.3s ease;
+  cursor: zoom-in;
 }
 
 .project-video-slot {
@@ -412,6 +431,90 @@ a {
   display: block;
   object-fit: cover;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: zoom-in;
+}
+
+.project-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  background: rgba(0, 0, 0, 0.92);
+}
+
+.project-lightbox.open {
+  display: flex;
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+.lightbox-figure {
+  margin: 0;
+  width: min(1100px, 88vw);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox-caption {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.lightbox-btn {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  border-radius: 6px;
+  background: rgba(20, 20, 20, 0.82);
+  color: rgba(255, 255, 255, 0.9);
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.lightbox-close {
+  top: 18px;
+  right: 18px;
+}
+
+.lightbox-prev {
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-btn:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(42, 42, 42, 0.94);
+  color: #fff;
 }
 
 .project-metadata {
@@ -464,34 +567,40 @@ a {
   .project-header-bar {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 6px 14px;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 6px 10px;
+    flex-wrap: nowrap;
   }
 
   .back-btn {
     width: auto;
     justify-content: center;
-    padding: 6px 14px;
-    font-size: 11px;
+    padding: 6px 10px;
+    font-size: 10px;
+    white-space: nowrap;
   }
 
   .mobile-project-nav {
     display: inline-flex;
-    gap: 6px;
-    margin-left: auto;
+    gap: 4px;
+    margin-left: 0;
   }
 
   .mobile-project-nav-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
   }
 
   .header-icon {
-    width: 28px;
-    height: 28px;
+    display: none;
+  }
+
+  .project-index {
+    margin-left: auto;
+    font-size: 9px;
+    white-space: nowrap;
   }
 
   .header-title {
@@ -518,13 +627,6 @@ a {
   .project-subtitle {
     font-size: 13px;
     max-width: 100%;
-  }
-  
-  .header-icon {
-    width: 32px;
-    height: 32px;
-    justify-self: flex-end;
-    border-radius: 3px;
   }
   
   .gallery-grid {
@@ -555,6 +657,27 @@ a {
   .metadata-grid {
     grid-template-columns: 1fr;
     gap: 18px;
+  }
+
+  .project-lightbox {
+    padding: 16px;
+  }
+
+  .lightbox-figure {
+    width: 100%;
+  }
+
+  .lightbox-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .lightbox-prev {
+    left: 10px;
+  }
+
+  .lightbox-next {
+    right: 10px;
   }
 }
 
@@ -732,4 +855,21 @@ a {
 @media (max-width: 640px) {
   /* hide on small screens to avoid occluding content */
   .project-vinyl { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .project-loader-vinyl,
+  .project-vinyl {
+    animation: none !important;
+    transform: translateY(-50%) translateX(40%) !important;
+  }
 }

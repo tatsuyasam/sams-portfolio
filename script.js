@@ -2,10 +2,12 @@ const vinylCollection = document.querySelector('.vinyl-collection');
 const vinylContainers = Array.from(document.querySelectorAll('.vinyl-container'));
 const vinylCovers = Array.from(document.querySelectorAll('.vinyl-cover'));
 const vinyls = Array.from(document.querySelectorAll('.vinyl'));
+const filterButtons = Array.from(document.querySelectorAll('.filter-button'));
 
 document.body.classList.add('loading');
 
 const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Calculate responsive spacing based on viewport size and aspect ratio
 let itemSpacingX = 290;
@@ -37,6 +39,7 @@ const calculateResponsiveSpacing = () => {
 calculateResponsiveSpacing();
 
 let activeIndex = 0;
+let activeFilter = 'all';
 const supportsTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 let touchStartY = null;
 let touchCurrentY = null;
@@ -67,6 +70,12 @@ const setTouchHover = (cover) => {
 
 const animateVinylNavigation = (vinyl, targetUrl) => {
   if (!vinyl || !targetUrl || isNavigating) return;
+
+  if (prefersReducedMotion) {
+    window.location.href = targetUrl;
+    return;
+  }
+
   isNavigating = true;
   document.body.classList.add('transitioning');
   document.body.classList.add('dark-grey-background');
@@ -111,10 +120,10 @@ const animateVinylNavigation = (vinyl, targetUrl) => {
   vinyl.style.visibility = 'hidden';
 
   clone.addEventListener('animationend', () => {
-    clone.classList.add('spin-slow');
-    setTimeout(() => {
+    clone.classList.add('spin-continuous');
+    requestAnimationFrame(() => {
       window.location.href = targetUrl;
-    }, 1000);
+    });
   }, { once: true });
 };
 
@@ -122,12 +131,27 @@ if (supportsTouch) {
   document.body.classList.add('touch-device');
 }
 
+const getVisibleContainers = () => vinylContainers.filter((container) => {
+  if (activeFilter === 'all') return true;
+  return (container.dataset.categories || '').split(' ').includes(activeFilter);
+});
+
 const setContainerPositions = () => {
-  vinylContainers.forEach((container, index) => {
+  const visibleContainers = getVisibleContainers();
+
+  vinylContainers.forEach((container) => {
+    const isVisible = visibleContainers.includes(container);
+    container.classList.toggle('filter-hidden', !isVisible);
+    container.setAttribute('aria-hidden', String(!isVisible));
+  });
+
+  visibleContainers.forEach((container, index) => {
     container.style.left = `${-index * itemSpacingX}px`;
     container.style.top = `${index * itemSpacingY}px`;
     container.style.zIndex = `${index + 1}`; // stack later containers in front
   });
+
+  activeIndex = clamp(activeIndex, 0, Math.max(visibleContainers.length - 1, 0));
 };
 
 const updateCollectionTransform = () => {
@@ -145,7 +169,7 @@ window.addEventListener('touchstart', (event) => {
   if (autoScrollAnimationId) {
     cancelAnimationFrame(autoScrollAnimationId);
     autoScrollAnimationId = null;
-    activeIndex = clamp(activeIndex, 0, vinylContainers.length - 1);
+    activeIndex = clamp(activeIndex, 0, Math.max(getVisibleContainers().length - 1, 0));
   }
 }, { passive: false });
 
@@ -166,7 +190,7 @@ window.addEventListener('touchmove', (event) => {
 
   // Reverse the direction so swipe up moves collection forward
   const direction = touchAccumulated > 0 ? -1 : 1;
-  activeIndex = clamp(activeIndex + direction * touchStep, 0, vinylContainers.length - 1);
+  activeIndex = clamp(activeIndex + direction * touchStep, 0, Math.max(getVisibleContainers().length - 1, 0));
   updateCollectionTransform();
 
   // Keep remaining motion for smoother interaction
@@ -193,7 +217,13 @@ let autoScrollProgress = 0;
 const autoScrollVinyls = () => {
   let startTime = performance.now();
   const duration = 1500; // Total animation duration in ms
-  const maxScroll = vinylContainers.length - 2;
+  const maxScroll = Math.max(getVisibleContainers().length - 2, 0);
+
+  if (prefersReducedMotion) {
+    activeIndex = maxScroll;
+    updateCollectionTransform();
+    return;
+  }
   
   const animate = (currentTime) => {
     const elapsed = currentTime - startTime;
@@ -245,6 +275,7 @@ window.addEventListener('wheel', (event) => {
   vinylCollection.classList.add('scrolling');
   const direction = event.deltaY > 0 ? -1 : 1;
   activeIndex = clamp(activeIndex + direction * scrollStep, 0, vinylContainers.length - 1);
+  activeIndex = clamp(activeIndex, 0, Math.max(getVisibleContainers().length - 1, 0));
   updateCollectionTransform();
 }, { passive: false });
 
@@ -297,6 +328,22 @@ contactButton.addEventListener('click', () => {
     document.body.classList.add('dark-grey-background');
     resetView();
     if (contactOptions) contactOptions.style.display = 'flex';
+});
+
+filterButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    filterButtons.forEach((filterButton) => {
+      filterButton.classList.remove('active');
+      filterButton.setAttribute('aria-pressed', 'false');
+    });
+    button.classList.add('active');
+    button.setAttribute('aria-pressed', 'true');
+    activeFilter = button.dataset.filter || 'all';
+    activeIndex = 0;
+    setContainerPositions();
+    updateCollectionTransform();
+  });
+  button.setAttribute('aria-pressed', button.classList.contains('active') ? 'true' : 'false');
 });
 
 if (award1Button) {
@@ -440,7 +487,19 @@ document.addEventListener('touchstart', (event) => {
 }, { passive: true });
 
 vinyls.forEach((vinyl) => {
+  vinyl.tabIndex = 0;
+  vinyl.setAttribute('role', 'button');
+  vinyl.setAttribute('aria-label', `Open ${vinyl.closest('.vinyl-cover')?.dataset.projectName || 'project'}`);
+
   vinyl.addEventListener('click', () => {
+    if (isNavigating) return;
+    const targetUrl = vinyl.dataset.projectUrl || 'project.html';
+    animateVinylNavigation(vinyl, targetUrl);
+  });
+
+  vinyl.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    event.preventDefault();
     if (isNavigating) return;
     const targetUrl = vinyl.dataset.projectUrl || 'project.html';
     animateVinylNavigation(vinyl, targetUrl);

@@ -50,8 +50,16 @@
 
 <!--  Main content of the website  -->
 
+  <nav class="project-filter" aria-label="Project filters">
+    <button type="button" class="filter-button active" data-filter="all">ALL</button>
+    <button type="button" class="filter-button" data-filter="architecture">ARCHITECTURE</button>
+    <button type="button" class="filter-button" data-filter="computational">COMPUTATIONAL</button>
+    <button type="button" class="filter-button" data-filter="competition">COMPETITION</button>
+    <button type="button" class="filter-button" data-filter="cultural">CULTURAL</button>
+  </nav>
+
   <main class="vinyl-collection">
-     <div class="vinyl-container">
+     <div class="vinyl-container" data-categories="computational">
        <div class="vinyl-cover" data-project-name="GRASSHOPPER">
          <img class="cover-image" src="01_GRASSHOPPER.png" alt="Album cover 1" />
          <div class="vinyl" data-project-url="projects/01-Grasshopper.html">
@@ -59,7 +67,7 @@
          </div>
        </div>
      </div>
-     <div class="vinyl-container">
+     <div class="vinyl-container" data-categories="architecture competition public">
        <div class="vinyl-cover" data-project-name="STONE VEIL">
          <img class="cover-image" src="02_STONE VEIL.png" alt="Album cover 2" />
          <div class="vinyl" data-project-url="projects/02-Stone-Veil.html">
@@ -67,7 +75,7 @@
          </div>
        </div>
      </div>
-     <div class="vinyl-container">
+     <div class="vinyl-container" data-categories="architecture community">
        <div class="vinyl-cover" data-project-name="ADDA">
          <img class="cover-image" src="03_ADDA.png" alt="Album cover 3" />
          <div class="vinyl" data-project-url="projects/03-Adda.html">
@@ -75,7 +83,7 @@
          </div>
        </div>
      </div>
-     <div class="vinyl-container">
+     <div class="vinyl-container" data-categories="architecture competition public">
        <div class="vinyl-cover" data-project-name="KELIP">
          <img class="cover-image" src="04_KELIP.png" alt="Album cover 4" />
          <div class="vinyl" data-project-url="projects/04-Kelip.html">
@@ -83,7 +91,7 @@
          </div>
        </div>
      </div>
-     <div class="vinyl-container">
+     <div class="vinyl-container" data-categories="architecture cultural community">
        <div class="vinyl-cover" data-project-name="ALIWAL MUSIC HOUSE">
          <img class="cover-image" src="05_ALIWAL MUSIC HOUSE.png" alt="Album cover 5" />
          <div class="vinyl" data-project-url="projects/05-Aliwal-Music-House.html">
@@ -91,7 +99,7 @@
          </div>
        </div>
      </div>
-         <div class="vinyl-container">
+         <div class="vinyl-container" data-categories="architecture cultural hospitality">
        <div class="vinyl-cover" data-project-name="TOBARA">
          <img class="cover-image" src="06_TOBARA.png" alt="Album cover 6" />
          <div class="vinyl" data-project-url="projects/06-Tobara.html">

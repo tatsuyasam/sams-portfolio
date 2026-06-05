@@ -1,4 +1,17 @@
 (function(){
+  const PROJECTS = [
+    { id: '01', url: '01-Grasshopper.html', label: 'Computational Design' },
+    { id: '02', url: '02-Stone-Veil.html', label: 'Stone Veil' },
+    { id: '03', url: '03-Adda.html', label: 'Adda' },
+    { id: '04', url: '04-Kelip.html', label: 'Kelip' },
+    { id: '05', url: '05-Aliwal-Music-House.html', label: 'Aliwal Music House' },
+    { id: '06', url: '06-Tobara.html', label: 'Tobara' },
+  ];
+
+  function getCurrentProjectIndex() {
+    return PROJECTS.findIndex((project) => location.pathname.includes(project.url));
+  }
+
   function applyMasonry(grid) {
     const rowHeight = parseInt(getComputedStyle(grid).getPropertyValue('--gallery-row-height')) || 220;
     const colWidth = parseInt(getComputedStyle(grid).getPropertyValue('--gallery-column-width')) || 12;
@@ -124,6 +137,7 @@
     document.body.classList.remove('loading');
     document.body.classList.add('page-loaded');
     initVinyl();
+    initProjectLightbox();
     removeProjectLoader();
   }
 
@@ -157,6 +171,7 @@
     document.body.classList.remove('loading');
     document.body.classList.add('page-loaded');
     initVinyl();
+    initProjectLightbox();
     removeProjectLoader();
   } else {
     startProjectLoader();
@@ -181,20 +196,19 @@
     // avoid creating multiple times
     if(document.querySelector('.project-vinyl')) return;
 
-    const projects = [
-      { id: '01', url: '01-Grasshopper.html', label: 'Grasshopper' },
-      { id: '02', url: '02-Stone-Veil.html', label: 'Stone Veil' },
-      { id: '03', url: '03-Adda.html', label: 'Adda' },
-      { id: '04', url: '04-Kelip.html', label: 'Kelip' },
-      { id: '05', url: '05-Aliwal-Music-House.html', label: 'Aliwal Music House' },
-      { id: '06', url: '06-Tobara.html', label: 'Tobara' },
-    ];
-    const currentProjectIndex = projects.findIndex((project) => location.pathname.includes(project.url));
-    const previousProject = projects[(currentProjectIndex - 1 + projects.length) % projects.length];
-    const nextProject = projects[(currentProjectIndex + 1) % projects.length];
+    const currentProjectIndex = getCurrentProjectIndex();
+    const previousProject = PROJECTS[(currentProjectIndex - 1 + PROJECTS.length) % PROJECTS.length];
+    const nextProject = PROJECTS[(currentProjectIndex + 1) % PROJECTS.length];
     const header = document.querySelector('.project-header-bar');
 
     if (header && currentProjectIndex !== -1 && !header.querySelector('.mobile-project-nav')) {
+      if (!header.querySelector('.project-index')) {
+        const index = document.createElement('span');
+        index.className = 'project-index';
+        index.textContent = `${String(currentProjectIndex + 1).padStart(2, '0')} / ${String(PROJECTS.length).padStart(2, '0')}`;
+        header.appendChild(index);
+      }
+
       const mobileNav = document.createElement('nav');
       mobileNav.className = 'mobile-project-nav';
       mobileNav.setAttribute('aria-label', 'Project navigation');
@@ -289,6 +303,97 @@
 
     // initial position
     requestAnimationFrame(updateRotation);
+  }
+
+  function initProjectLightbox() {
+    if (document.querySelector('.project-lightbox')) return;
+
+    const images = Array.from(document.querySelectorAll('.feature-image img, .gallery-grid img'));
+    if (!images.length) return;
+
+    let activeImageIndex = 0;
+    let previousFocus = null;
+
+    const lightbox = document.createElement('div');
+    lightbox.className = 'project-lightbox';
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.setAttribute('aria-label', 'Project image viewer');
+    lightbox.innerHTML = `
+      <button type="button" class="lightbox-btn lightbox-close" aria-label="Close image viewer">X</button>
+      <button type="button" class="lightbox-btn lightbox-prev" aria-label="Previous image">&lt;</button>
+      <figure class="lightbox-figure">
+        <img class="lightbox-image" alt="">
+        <figcaption class="lightbox-caption"></figcaption>
+      </figure>
+      <button type="button" class="lightbox-btn lightbox-next" aria-label="Next image">&gt;</button>
+    `;
+    document.body.appendChild(lightbox);
+
+    const lightboxImage = lightbox.querySelector('.lightbox-image');
+    const caption = lightbox.querySelector('.lightbox-caption');
+    const closeButton = lightbox.querySelector('.lightbox-close');
+    const prevButton = lightbox.querySelector('.lightbox-prev');
+    const nextButton = lightbox.querySelector('.lightbox-next');
+
+    const renderImage = () => {
+      const image = images[activeImageIndex];
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt || 'Project image';
+      caption.textContent = `${activeImageIndex + 1} / ${images.length} ${image.alt || 'Project image'}`;
+    };
+
+    const closeLightbox = () => {
+      lightbox.classList.remove('open');
+      document.body.classList.remove('lightbox-open');
+      if (previousFocus) previousFocus.focus();
+    };
+
+    const openLightbox = (index, trigger) => {
+      activeImageIndex = index;
+      previousFocus = trigger;
+      renderImage();
+      lightbox.classList.add('open');
+      document.body.classList.add('lightbox-open');
+      closeButton.focus();
+    };
+
+    const showPrevious = () => {
+      activeImageIndex = (activeImageIndex - 1 + images.length) % images.length;
+      renderImage();
+    };
+
+    const showNext = () => {
+      activeImageIndex = (activeImageIndex + 1) % images.length;
+      renderImage();
+    };
+
+    images.forEach((image, index) => {
+      image.tabIndex = 0;
+      image.setAttribute('role', 'button');
+      image.setAttribute('aria-label', `Open image ${index + 1} of ${images.length}`);
+      image.addEventListener('click', () => openLightbox(index, image));
+      image.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openLightbox(index, image);
+        }
+      });
+    });
+
+    closeButton.addEventListener('click', closeLightbox);
+    prevButton.addEventListener('click', showPrevious);
+    nextButton.addEventListener('click', showNext);
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) closeLightbox();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (!lightbox.classList.contains('open')) return;
+      if (event.key === 'Escape') closeLightbox();
+      if (event.key === 'ArrowLeft') showPrevious();
+      if (event.key === 'ArrowRight') showNext();
+    });
   }
 
   window.addEventListener('resize', initVinyl);
