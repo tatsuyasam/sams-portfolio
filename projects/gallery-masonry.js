@@ -177,6 +177,18 @@
     // avoid creating multiple times
     if(document.querySelector('.project-vinyl')) return;
 
+    const projects = [
+      { id: '01', url: '01-Grasshopper.html', label: 'Grasshopper' },
+      { id: '02', url: '02-Stone-Veil.html', label: 'Stone Veil' },
+      { id: '03', url: '03-Adda.html', label: 'Adda' },
+      { id: '04', url: '04-Kelip.html', label: 'Kelip' },
+      { id: '05', url: '05-Aliwal-Music-House.html', label: 'Aliwal Music House' },
+      { id: '06', url: '06-Tobara.html', label: 'Tobara' },
+    ];
+    const currentProjectIndex = projects.findIndex((project) => location.pathname.includes(project.url));
+    const previousProject = projects[(currentProjectIndex - 1 + projects.length) % projects.length];
+    const nextProject = projects[(currentProjectIndex + 1) % projects.length];
+
     const vinyl = document.createElement('div');
     vinyl.className = 'project-vinyl';
 
@@ -203,11 +215,43 @@
     // set size larger by default; can be tweaked per-project by changing the variable
     vinyl.style.setProperty('--vinyl-size', '400px');
 
+    const createNavVinyl = (project, direction) => {
+      if (!project || currentProjectIndex === -1) return null;
+
+      const link = document.createElement('a');
+      link.className = `project-nav-vinyl project-nav-vinyl-${direction}`;
+      link.href = project.url;
+      link.setAttribute('aria-label', `${direction === 'previous' ? 'Previous' : 'Next'} project: ${project.label}`);
+      link.title = `${direction === 'previous' ? 'Previous' : 'Next'} project: ${project.label}`;
+
+      const record = document.createElement('span');
+      record.className = 'project-nav-vinyl-record';
+
+      const linkImg = document.createElement('img');
+      linkImg.className = 'vinyl-image';
+      linkImg.src = `../${project.id}_Vinyl.png`;
+      linkImg.alt = '';
+      linkImg.onerror = () => { linkImg.src = heroImg.getAttribute('src') || ''; };
+
+      const label = document.createElement('span');
+      label.className = 'project-nav-vinyl-label';
+      label.textContent = direction === 'previous' ? 'Prev proj' : 'Next proj';
+
+      record.appendChild(linkImg);
+      link.appendChild(record);
+      link.appendChild(label);
+      document.body.appendChild(link);
+      return link;
+    };
+
+    const previousVinyl = createNavVinyl(previousProject, 'previous');
+    const nextVinyl = createNavVinyl(nextProject, 'next');
+
     let rafId = null;
     function updateRotation(){
       const rotation = window.scrollY * 0.18; // tweak speed here
       // include translateX(40%) so only 60% of the vinyl is visible
-      vinyl.style.transform = `translateY(-50%) translateX(40%) rotate(${rotation}deg)`;
+      vinyl.style.setProperty('--vinyl-rotation', `${rotation}deg`);
       rafId = null;
     }
 
