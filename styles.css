@@ -37,6 +37,7 @@ body.loading {
   display: flex;
   justify-content: center;
   align-items: center;
+  filter: brightness(175%); 
 
   transition:
     opacity 0.8s ease,
@@ -455,13 +456,18 @@ body.touch-device .vinyl-cover.touch-hover::after {
     color: #fff;
     font-size: 10px;
     z-index: 10;
-    display: grid;
+    display: block;
     visibility: hidden;
     opacity: 0;
-    grid-template-columns: minmax(0px, 200px) 1fr;
-    gap: 20px;
-    align-items: start;
     transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+.about-me-text .info-row {
+    display: grid;
+    grid-template-columns: minmax(0, 160px) minmax(0, 320px) minmax(0, 80px);
+    gap: 10px;
+    align-items: start;
+    margin-bottom: 12px;
 }
 
 .about-me-text h1,h2 {
@@ -471,12 +477,18 @@ body.touch-device .vinyl-cover.touch-hover::after {
     color: #ffffff9d;
 }
 
-.about-me-text p1,p2 {
+.about-me-text p1,p2,p3 {
     margin: 0;
     padding: 0;
     font-size: 11px;
     line-height: 1.5;
     color: #fff;
+}
+
+.about-me-text p3 {
+    color: #ffffffb3;
+    font-size: 10px;
+    text-align: right;
 }
 
 .award1-button, .award2-button {
@@ -760,8 +772,12 @@ body.touch-device .vinyl-cover.touch-hover::after {
         max-width: none;
         padding: 0 8px 8px;
         margin-top: 40px;
-        grid-template-columns: 1fr;
         font-size: 10px;
+    }
+
+    .about-me-text .info-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
     }
 
     .about-me-text h1,
@@ -770,7 +786,12 @@ body.touch-device .vinyl-cover.touch-hover::after {
     }
 
     .about-me-text p1,
-    .about-me-text p2 {
+    .about-me-text p2,
+    .about-me-text p3 {
         font-size: 10px;
+    }
+
+    .about-me-text p3 {
+        text-align: left;
     }
 }
