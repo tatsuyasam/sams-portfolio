@@ -192,6 +192,29 @@
     const currentProjectIndex = projects.findIndex((project) => location.pathname.includes(project.url));
     const previousProject = projects[(currentProjectIndex - 1 + projects.length) % projects.length];
     const nextProject = projects[(currentProjectIndex + 1) % projects.length];
+    const header = document.querySelector('.project-header-bar');
+
+    if (header && currentProjectIndex !== -1 && !header.querySelector('.mobile-project-nav')) {
+      const mobileNav = document.createElement('nav');
+      mobileNav.className = 'mobile-project-nav';
+      mobileNav.setAttribute('aria-label', 'Project navigation');
+
+      const previousButton = document.createElement('a');
+      previousButton.className = 'mobile-project-nav-btn mobile-project-nav-prev';
+      previousButton.href = previousProject.url;
+      previousButton.textContent = '<';
+      previousButton.setAttribute('aria-label', `Previous project: ${previousProject.label}`);
+
+      const nextButton = document.createElement('a');
+      nextButton.className = 'mobile-project-nav-btn mobile-project-nav-next';
+      nextButton.href = nextProject.url;
+      nextButton.textContent = '>';
+      nextButton.setAttribute('aria-label', `Next project: ${nextProject.label}`);
+
+      mobileNav.appendChild(previousButton);
+      mobileNav.appendChild(nextButton);
+      header.insertBefore(mobileNav, header.querySelector('.header-icon'));
+    }
 
     const vinyl = document.createElement('div');
     vinyl.className = 'project-vinyl';
