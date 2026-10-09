@@ -1152,7 +1152,7 @@ body.touch-device .vinyl-cover.touch-hover::after {
 }
 
 
-.award1-button, .award2-button, .award3-button {
+.award1-button, .award2-button, .award3-button, .award4-button {
     background-color: transparent;
     color: #fff;
     border: none;
@@ -1169,7 +1169,7 @@ body.touch-device .vinyl-cover.touch-hover::after {
     line-height: 1.5; 
 }
 
-.award1-button:hover, .award2-button:hover, .award3-button:hover {
+.award1-button:hover, .award2-button:hover, .award3-button:hover, .award4-button:hover {
     opacity: 0.7;
 }
 
